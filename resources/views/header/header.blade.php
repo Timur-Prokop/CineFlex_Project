@@ -42,7 +42,7 @@
                 </svg>
             </button>
 
-            <a href="#" class="header__login">
+            <a href="{{route('login')}}" class="header__login">
                 <svg viewBox="0 0 24 24" fill="none">
                     <circle cx="12" cy="8" r="4"></circle>
                     <path d="M4.5 21C5.2 16.9 8 15 12 15C16 15 18.8 16.9 19.5 21"></path>

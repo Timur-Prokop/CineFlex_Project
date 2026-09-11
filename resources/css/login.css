@@ -1,0 +1,375 @@
+/* ========================================
+   Cineflex Login
+   ======================================== */
+
+:root {
+    --black: #050505;
+    --black-light: #0d0d0d;
+    --card: #111111;
+
+    --green: #39ff88;
+    --green-dark: #18b95b;
+
+    --purple: #8b5cf6;
+    --purple-dark: #6d28d9;
+
+    --white: #f5f5f5;
+    --gray: #a1a1aa;
+    --border: #27272a;
+    --error: #ff4d6d;
+}
+
+
+/* ========================================
+   Main container
+   ======================================== */
+
+.login-container {
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 40px 20px;
+
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(57, 255, 136, 0.08),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 80% 80%,
+            rgba(139, 92, 246, 0.10),
+            transparent 35%
+        ),
+        var(--black);
+}
+
+
+/* ========================================
+   Login card
+   ======================================== */
+
+.login-card {
+    width: 100%;
+    max-width: 440px;
+
+    padding: 40px;
+
+    background: rgba(17, 17, 17, 0.95);
+
+    border: 1px solid var(--border);
+    border-radius: 18px;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.6),
+        0 0 40px rgba(57, 255, 136, 0.04);
+
+    color: var(--white);
+}
+
+
+/* ========================================
+   Heading
+   ======================================== */
+
+.login-card h1 {
+    margin: 0 0 10px;
+
+    font-size: 2rem;
+    font-weight: 700;
+
+    background: linear-gradient(
+        90deg,
+        var(--green),
+        var(--purple)
+    );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.login-subtitle {
+    margin: 0 0 30px;
+
+    color: var(--gray);
+    font-size: 0.95rem;
+}
+
+
+/* ========================================
+   Form
+   ======================================== */
+
+.login-card form {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--white);
+}
+
+
+/* ========================================
+   Inputs
+   ======================================== */
+
+.form-input {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 13px 14px;
+
+    background: var(--black-light);
+
+    border: 1px solid var(--border);
+    border-radius: 9px;
+
+    color: var(--white);
+    font-size: 1rem;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.form-input::placeholder {
+    color: #52525b;
+}
+
+.form-input:focus {
+    border-color: var(--green);
+
+    box-shadow:
+        0 0 0 3px rgba(57, 255, 136, 0.10),
+        0 0 20px rgba(57, 255, 136, 0.08);
+
+    background: #101010;
+}
+
+
+/* ========================================
+   Password
+   ======================================== */
+
+.password-wrapper {
+    position: relative;
+}
+
+.password-wrapper .form-input {
+    padding-right: 75px;
+}
+
+.password-toggle {
+    position: absolute;
+
+    right: 10px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    padding: 5px 7px;
+
+    border: none;
+    background: transparent;
+
+    color: var(--green);
+
+    font-size: 0.8rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: color 0.2s ease;
+}
+
+.password-toggle:hover {
+    color: var(--purple);
+}
+
+
+/* ========================================
+   Remember me
+   ======================================== */
+
+.remember-field {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    color: var(--gray);
+    font-size: 0.9rem;
+}
+
+.remember-field input {
+    width: 16px;
+    height: 16px;
+
+    accent-color: var(--green);
+
+    cursor: pointer;
+}
+
+.remember-field label {
+    cursor: pointer;
+}
+
+
+/* ========================================
+   Login button
+   ======================================== */
+
+.login-button {
+    width: 100%;
+
+    padding: 14px 20px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: linear-gradient(
+        110deg,
+        var(--green-dark),
+        var(--green),
+        var(--purple),
+        var(--purple-dark)
+    );
+
+    background-size: 250% 100%;
+
+    color: #050505;
+
+    font-size: 1rem;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background-position 0.4s ease;
+}
+
+.login-button:hover {
+    transform: translateY(-2px);
+
+    background-position: 100% 0;
+
+    box-shadow:
+        0 8px 25px rgba(57, 255, 136, 0.18),
+        0 8px 35px rgba(139, 92, 246, 0.18);
+}
+
+.login-button:active {
+    transform: translateY(0);
+}
+
+
+/* ========================================
+   Divider
+   ======================================== */
+
+.login-card hr {
+    margin: 30px 0;
+
+    border: none;
+    border-top: 1px solid var(--border);
+}
+
+
+/* ========================================
+   Links
+   ======================================== */
+
+.login-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    font-size: 0.9rem;
+    color: var(--gray);
+}
+
+.login-links p {
+    margin: 0;
+}
+
+.login-links a {
+    color: var(--green);
+
+    text-decoration: none;
+
+    transition:
+        color 0.2s ease,
+        text-shadow 0.2s ease;
+}
+
+.login-links a:hover {
+    color: var(--purple);
+
+    text-shadow:
+        0 0 12px rgba(139, 92, 246, 0.5);
+}
+
+
+/* ========================================
+   Validation errors
+   ======================================== */
+
+.form-errors {
+    margin-bottom: 20px;
+
+    padding: 12px 15px;
+
+    border: 1px solid rgba(255, 77, 109, 0.35);
+    border-radius: 9px;
+
+    background: rgba(255, 77, 109, 0.08);
+
+    color: var(--error);
+
+    font-size: 0.9rem;
+}
+
+.form-errors ul {
+    margin: 0;
+    padding-left: 18px;
+}
+
+
+/* ========================================
+   Mobile
+   ======================================== */
+
+@media (max-width: 500px) {
+
+    .login-container {
+        padding: 20px 15px;
+    }
+
+    .login-card {
+        padding: 28px 22px;
+
+        border-radius: 14px;
+    }
+
+    .login-card h1 {
+        font-size: 1.7rem;
+    }
+}
