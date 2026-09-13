@@ -19,7 +19,7 @@
 
             <a href="{{ route('catalog') }}"
                class="header__link {{ request()->routeIs('catalog') ? 'active' : '' }}">
-                catalog
+                Catalog
             </a>
 
             <a href="{{ route('medewerkers') }}"

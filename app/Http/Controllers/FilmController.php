@@ -13,6 +13,8 @@ class FilmController extends Controller
     public function index()
     {
         //
+        $films = DB::table('films')->get();
+        return view('films', ['films' => $films]);
     }
 
     public function create()
