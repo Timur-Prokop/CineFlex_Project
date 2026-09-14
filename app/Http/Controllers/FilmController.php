@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\DB;
 use App\Models\Film;
 use Illuminate\Http\Request;
 
@@ -12,7 +12,11 @@ class FilmController extends Controller
      */
     public function index()
     {
-        //
+        $films = DB::table('films')->get();
+
+        return view('films', [
+            'films' => $films
+        ]);
     }
 
     public function create()

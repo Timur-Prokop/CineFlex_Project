@@ -19,10 +19,10 @@
 
             <a href="{{ route('catalog') }}"
                class="header__link {{ request()->routeIs('catalog') ? 'active' : '' }}">
-                catalog
+                Catalog
             </a>
 
-            <a href="{{ route('medewerkers') }}"
+            <a href="{{ route('medewerkers.index') }}"
                class="header__link {{ request()->routeIs('medewerkers') ? 'active' : '' }}">
                 Medewerkers
             </a>

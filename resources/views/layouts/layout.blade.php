@@ -1,8 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="{{ asset('header/header.css') }}">
-    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/'])
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/header.css' ])
 
     <meta charset="UTF-8">
     <meta name="viewport"
