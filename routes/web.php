@@ -5,6 +5,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EmployeeController;
 
 
 Route::get('/', function () {
@@ -19,15 +20,9 @@ Route::get('/catalog', function () {
     return view('catalog');
 })->name('catalog');
 
-Route::get('/medewerkers', function () {
-    return view('medewerkers');
-})->name('medewerkers');
-
 Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
-
-
 
 
 // login
@@ -48,6 +43,19 @@ Route::post('/register', [RegisterController::class, 'register']);
 Route::get('reset-password', [PasswordController::class, 'show'])
     ->name('reset.password');
 
+// medewerkers
+
+Route::get('/medewerkers', [EmployeeController::class, 'index'])
+    ->name('medewerkers.index');
+
+Route::post('/medewerkers', [EmployeeController::class, 'store'])
+    ->name('medewerkers.store');
+
+Route::put('/medewerkers/{id}', [EmployeeController::class, 'update'])
+    ->name('medewerkers.update');
+
+Route::delete('/medewerkers/{id}', [EmployeeController::class, 'destroy'])
+    ->name('medewerkers.destroy');
 
 
 //  films
