@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="{{ asset('header/header.css') }}">
+    <link rel="stylesheet" href="{{ asset('content/films.css') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/'])
 
     <meta charset="UTF-8">

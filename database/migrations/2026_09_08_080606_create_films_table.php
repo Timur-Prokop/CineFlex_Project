@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('pic_path')->nullable();
             $table->string('page_pic_path')->nullable();
             $table->string('description');
+            $table->foreignId('fk_id_age_group')->constrained('age_groups');
         });
     }
 

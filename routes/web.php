@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\FilmController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
+
 
 Route::get('/', function () {
     return view('home');
@@ -45,3 +47,11 @@ Route::post('/register', [RegisterController::class, 'register']);
 
 Route::get('reset-password', [PasswordController::class, 'show'])
     ->name('reset.password');
+
+
+
+//  films
+
+Route::get('/films', [FilmController::class, 'index'])
+    ->name('films');
+
