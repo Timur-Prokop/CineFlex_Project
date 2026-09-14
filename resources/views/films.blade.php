@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 
 @section('content')
-
+@vite('/resources/css/films.css')
     <main class="films-page">
         <section class="films-hero">
             <div class="page-container">
