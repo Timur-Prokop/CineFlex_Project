@@ -6,7 +6,20 @@ const togglePasswordConfirmation = document.getElementById('toggle-password-conf
 
 
 if (passwordInput && togglePassword) {
-    togglePassword.addEventListener('click', () => {
+    togglePassword.addEventListener('mousedown', () => {
+        const isPassword = passwordInput.type === 'password';
+
+        passwordInput.type = isPassword ? 'text' : 'password';
+
+        togglePassword.textContent = isPassword ? 'Hide' : 'Show';
+
+        togglePassword.setAttribute(
+            'aria-label',
+            isPassword ? 'Hide password' : 'Show password'
+        );
+    });
+
+    togglePassword.addEventListener('mouseup', () => {
         const isPassword = passwordInput.type === 'password';
 
         passwordInput.type = isPassword ? 'text' : 'password';
@@ -22,7 +35,20 @@ if (passwordInput && togglePassword) {
 
 
 if (passwordConfirmationInput && togglePasswordConfirmation) {
-    togglePasswordConfirmation.addEventListener('click', () => {
+    togglePasswordConfirmation.addEventListener('mousedown', () => {
+        const isPassword = passwordConfirmationInput.type === 'password';
+
+        passwordConfirmationInput.type = isPassword ? 'text' : 'password';
+
+        togglePasswordConfirmation.textContent = isPassword ? 'Hide' : 'Show';
+
+        togglePasswordConfirmation.setAttribute(
+            'aria-label',
+            isPassword ? 'Hide password' : 'Show password'
+        );
+    });
+
+    togglePasswordConfirmation.addEventListener('mouseup', () => {
         const isPassword = passwordConfirmationInput.type === 'password';
 
         passwordConfirmationInput.type = isPassword ? 'text' : 'password';
