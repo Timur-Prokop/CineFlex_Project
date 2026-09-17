@@ -1,0 +1,246 @@
+:root {
+    --black: #050505;
+    --black-light: #0d0d0d;
+    --card: #111111;
+
+    --green: #39ff88;
+    --green-dark: #16a85a;
+
+    --purple: #9b5cff;
+    --purple-dark: #6d32c9;
+
+    --white: #ffffff;
+    --gray: #a5a5a5;
+    --border: #292929;
+
+    --error: #ff5c5c;
+}
+
+.change-email-container {
+    min-height: calc(100vh - 80px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(57, 255, 136, 0.08),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at bottom right,
+            rgba(155, 92, 255, 0.10),
+            transparent 35%
+        ),
+        var(--black);
+}
+
+.change-email-card {
+    width: 100%;
+    max-width: 500px;
+    padding: 40px;
+
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.5),
+        0 0 40px rgba(155, 92, 255, 0.05);
+}
+
+.change-email-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: linear-gradient(
+        135deg,
+        var(--green),
+        var(--purple)
+    );
+
+    color: var(--black);
+    font-size: 28px;
+}
+
+.change-email-card h1 {
+    margin: 0 0 12px;
+
+    text-align: center;
+
+    font-size: 30px;
+    font-weight: 700;
+
+    background: linear-gradient(
+        90deg,
+        var(--green),
+        var(--purple)
+    );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.change-email-subtitle {
+    margin: 0 0 30px;
+
+    color: var(--gray);
+    text-align: center;
+    line-height: 1.6;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+
+    color: var(--white);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.form-group input {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 13px 15px;
+
+    background: var(--black-light);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    color: var(--white);
+    font-size: 15px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.form-group input:focus {
+    border-color: var(--purple);
+
+    box-shadow:
+        0 0 0 3px rgba(155, 92, 255, 0.12);
+}
+
+.change-email-button {
+    width: 100%;
+
+    margin-top: 10px;
+    padding: 14px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: linear-gradient(
+        90deg,
+        var(--green-dark),
+        var(--purple-dark)
+    );
+
+    color: var(--white);
+
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.change-email-button:hover {
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 8px 25px rgba(155, 92, 255, 0.25);
+}
+
+.form-errors {
+    margin-bottom: 20px;
+    padding: 12px 15px;
+
+    border: 1px solid rgba(255, 92, 92, 0.3);
+    border-radius: 8px;
+
+    background: rgba(255, 92, 92, 0.08);
+
+    color: var(--error);
+}
+
+.form-errors ul {
+    margin: 0;
+    padding-left: 18px;
+}
+
+.form-errors li {
+    margin-bottom: 4px;
+}
+
+.form-errors li:last-child {
+    margin-bottom: 0;
+}
+
+.change-email-links {
+    margin-top: 25px;
+    padding-top: 20px;
+
+    border-top: 1px solid var(--border);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.change-email-links a {
+    color: var(--green);
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.change-email-links a:hover {
+    text-decoration: underline;
+}
+
+.logout-button {
+    padding: 0;
+
+    border: none;
+    background: none;
+
+    color: var(--gray);
+    font-size: 14px;
+
+    cursor: pointer;
+}
+
+.logout-button:hover {
+    color: var(--white);
+}
+
+@media (max-width: 600px) {
+    .change-email-card {
+        padding: 30px 20px;
+    }
+
+    .change-email-card h1 {
+        font-size: 26px;
+    }
+}

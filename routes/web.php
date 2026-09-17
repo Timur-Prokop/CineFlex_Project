@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\FilmController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\RegisterController;
@@ -35,13 +37,49 @@ Route::post('/login', [LoginController::class, 'login']);
 Route::middleware('auth')->post('/logout', [LoginController::class, 'logout'])
     ->name('logout');
 
+// register
+
 Route::get('/register', [RegisterController::class, 'show'])
     ->name('register');
 
-Route::post('/register', [RegisterController::class, 'register']);
+Route::post('/register', [RegisterController::class, 'store']);
 
 Route::get('reset-password', [PasswordController::class, 'show'])
     ->name('reset.password');
+
+// email verification
+
+Route::post('/verification/send-verification-link', [VerificationController::class, 'sendLink'])
+    ->name('send.verification.link');
+
+Route::post('/verification/resend-verification-link', [VerificationController::class, 'resendLink'])
+    ->name('resend.verification.link');
+
+Route::get('/verification/note', [VerificationController::class, 'show'])
+    ->name('verification.note');
+
+Route::get('/verification/edit-your-email', [VerificationController::class, 'edit'])
+    ->name('verification.edit.mail');
+
+Route::put('/verification/edit-your-email', [VerificationController::class, 'update'])
+    ->name('verification.update.mail');
+
+Route::get('/verification/verify/{id}/{hash}', [VerificationController::class, 'verify'])
+    ->middleware('signed')
+    ->name('verification.verify');
+
+Route::get('/verification/success', function () {
+    if (! session('verification_completed')) {
+        abort(403);
+    }
+
+    return view('auth.verification-is-completed');
+})->middleware('auth')->name('account.is.verified');
+
+//profile
+
+Route::get('/profile', [ProfileController::class, 'show'])
+    ->middleware('auth')->name('profile');
 
 // medewerkers
 

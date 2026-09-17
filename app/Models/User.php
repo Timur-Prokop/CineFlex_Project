@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Database\Factories\UserFactory;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -22,7 +23,7 @@ use Illuminate\Notifications\Notifiable;
     'password_hash',
     'remember_token',
 ])]
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
@@ -35,13 +36,23 @@ class User extends Authenticatable
         ];
     }
 
-    public function getAuthPasswordName()
-    {
-        return 'password_hash';
-    }
-
     public function getAuthPassword()
     {
-        return $this->password_hash;
+        return $this->password;
+    }
+
+    public function isManager(): bool
+    {
+        return $this->fk_role === 1;
+    }
+
+    public function isWorker(): bool
+    {
+        return $this->fk_role === 2;
+    }
+
+    public function isClient(): bool
+    {
+        return $this->fk_role === 3;
     }
 }

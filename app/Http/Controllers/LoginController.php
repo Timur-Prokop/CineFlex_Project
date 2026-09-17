@@ -20,15 +20,31 @@ class LoginController extends Controller
             'password' => ['required'],
         ]);
 
-        if (Auth::attempt($credentials)) {
+
+        if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
 
-            return redirect()->intended('dashboard');
+            if (! $request->user()->hasVerifiedEmail()) {
+                return redirect()->route('verification.note');
+            }
+
+            return redirect()->intended('films');
         }
 
         return back()->withErrors([
             'email' => 'Verkeerde inloggegevens!'
         ])->onlyInput('email');
+    }
+
+    public function logout(Request $request): RedirectResponse
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect()->route('login');
     }
 
 }
