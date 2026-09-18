@@ -1,0 +1,360 @@
+/* ========================================
+   Cineflex Email Verification
+   ======================================== */
+
+:root {
+    --black: #050505;
+    --black-light: #0d0d0d;
+    --card: #111111;
+
+    --green: #39ff88;
+    --green-dark: #18b95b;
+
+    --purple: #8b5cf6;
+    --purple-dark: #6d28d9;
+
+    --white: #f5f5f5;
+    --gray: #a1a1aa;
+    --border: #27272a;
+    --error: #ff4d6d;
+}
+
+
+/* ========================================
+   Main container
+   ======================================== */
+
+.verification-container {
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 40px 20px;
+
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(57, 255, 136, 0.08),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 80% 80%,
+            rgba(139, 92, 246, 0.10),
+            transparent 35%
+        ),
+        var(--black);
+}
+
+
+/* ========================================
+   Verification card
+   ======================================== */
+
+.verification-card {
+    width: 100%;
+    max-width: 440px;
+
+    padding: 40px;
+
+    background: rgba(17, 17, 17, 0.95);
+
+    border: 1px solid var(--border);
+    border-radius: 18px;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.6),
+        0 0 40px rgba(57, 255, 136, 0.04);
+
+    color: var(--white);
+
+    text-align: center;
+}
+
+
+/* ========================================
+   Icon
+   ======================================== */
+
+.verification-icon {
+    width: 64px;
+    height: 64px;
+
+    margin: 0 auto 25px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: 1px solid rgba(57, 255, 136, 0.25);
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(57, 255, 136, 0.08),
+            rgba(139, 92, 246, 0.10)
+        );
+
+    color: var(--green);
+
+    font-size: 1.7rem;
+
+    box-shadow:
+        0 0 25px rgba(57, 255, 136, 0.08),
+        0 0 35px rgba(139, 92, 246, 0.06);
+}
+
+
+/* ========================================
+   Heading
+   ======================================== */
+
+.verification-card h1 {
+    margin: 0 0 12px;
+
+    font-size: 2rem;
+    font-weight: 700;
+
+    background: linear-gradient(
+        90deg,
+        var(--green),
+        var(--purple)
+    );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+
+/* ========================================
+   Subtitle
+   ======================================== */
+
+.verification-subtitle {
+    margin: 0 auto 25px;
+
+    max-width: 360px;
+
+    color: var(--gray);
+
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+
+/* ========================================
+   Email
+   ======================================== */
+
+.verification-email {
+    margin-bottom: 25px;
+
+    padding: 12px 15px;
+
+    background: var(--black-light);
+
+    border: 1px solid var(--border);
+    border-radius: 9px;
+
+    color: var(--white);
+
+    font-size: 0.95rem;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* ========================================
+   Verification button
+   ======================================== */
+
+.verification-button {
+    width: 100%;
+
+    padding: 14px 20px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: linear-gradient(
+        110deg,
+        var(--green-dark),
+        var(--green),
+        var(--purple),
+        var(--purple-dark)
+    );
+
+    background-size: 250% 100%;
+
+    color: #050505;
+
+    font-size: 1rem;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background-position 0.4s ease;
+}
+
+.verification-button:hover {
+    transform: translateY(-2px);
+
+    background-position: 100% 0;
+
+    box-shadow:
+        0 8px 25px rgba(57, 255, 136, 0.18),
+        0 8px 35px rgba(139, 92, 246, 0.18);
+}
+
+.verification-button:active {
+    transform: translateY(0);
+}
+
+
+/* ========================================
+   Success message
+   ======================================== */
+
+.verification-success {
+    margin-bottom: 20px;
+
+    padding: 12px 15px;
+
+    border: 1px solid rgba(57, 255, 136, 0.25);
+    border-radius: 9px;
+
+    background: rgba(57, 255, 136, 0.08);
+
+    color: var(--green);
+
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+
+/* ========================================
+   Divider
+   ======================================== */
+
+.verification-card hr {
+    margin: 30px 0;
+
+    border: none;
+    border-top: 1px solid var(--border);
+}
+
+
+/* ========================================
+   Links
+   ======================================== */
+
+.verification-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    color: var(--gray);
+
+    font-size: 0.9rem;
+}
+
+.verification-links p {
+    margin: 0;
+}
+
+.verification-links a {
+    color: var(--green);
+
+    text-decoration: none;
+
+    transition:
+        color 0.2s ease,
+        text-shadow 0.2s ease;
+}
+
+.verification-links a:hover {
+    color: var(--purple);
+
+    text-shadow:
+        0 0 12px rgba(139, 92, 246, 0.5);
+}
+
+
+/* ========================================
+   Logout
+   ======================================== */
+
+.logout-button {
+    padding: 0;
+
+    border: none;
+
+    background: transparent;
+
+    color: var(--gray);
+
+    font-size: 0.9rem;
+
+    cursor: pointer;
+
+    transition: color 0.2s ease;
+}
+
+.logout-button:hover {
+    color: var(--white);
+}
+
+
+/* ========================================
+   Validation errors
+   ======================================== */
+
+.form-errors {
+    margin-bottom: 20px;
+
+    padding: 12px 15px;
+
+    border: 1px solid rgba(255, 77, 109, 0.35);
+    border-radius: 9px;
+
+    background: rgba(255, 77, 109, 0.08);
+
+    color: var(--error);
+
+    font-size: 0.9rem;
+
+    text-align: left;
+}
+
+.form-errors ul {
+    margin: 0;
+    padding-left: 18px;
+}
+
+
+/* ========================================
+   Mobile
+   ======================================== */
+
+@media (max-width: 500px) {
+
+    .verification-container {
+        padding: 20px 15px;
+    }
+
+    .verification-card {
+        padding: 28px 22px;
+
+        border-radius: 14px;
+    }
+
+    .verification-card h1 {
+        font-size: 1.7rem;
+    }
+}

@@ -89,6 +89,8 @@
                         name="date_of_birth"
                         value="{{ old('date_of_birth') }}"
                         class="form-input"
+                        min="{{ now()->subYears(100)->format('Y-m-d') }}"
+                        max="{{ now()->subYears(12)->format('Y-m-d') }}"
                         autocomplete="bday"
                         required
                     >

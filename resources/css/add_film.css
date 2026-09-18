@@ -1,0 +1,497 @@
+/* =========================================================
+   PAGE
+========================================================= */
+
+.add-film-page {
+    min-height: 100vh;
+    width: 100%;
+
+    padding: 80px 0 120px;
+
+    background:
+        radial-gradient(
+            circle at 80% 10%,
+            rgba(46, 255, 117, 0.07),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 10% 40%,
+            rgba(139, 70, 255, 0.04),
+            transparent 28%
+        ),
+        #050706;
+
+    color: #ffffff;
+}
+
+
+.add-film-container {
+    width: min(calc(100% - 64px), 1100px);
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.add-film-header {
+    margin-bottom: 42px;
+}
+
+
+.add-film-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    margin-bottom: 15px;
+
+    color: #36f57a;
+
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+
+.add-film-label::before {
+    content: "";
+
+    width: 28px;
+    height: 2px;
+
+    background: #36f57a;
+    border-radius: 50px;
+}
+
+
+.add-film-header h1 {
+    margin: 0;
+
+    font-size: clamp(36px, 4vw, 56px);
+    line-height: 1.05;
+    letter-spacing: -1.8px;
+    font-weight: 800;
+}
+
+
+.add-film-header p {
+    max-width: 600px;
+
+    margin: 18px 0 0;
+
+    color: #8f959a;
+
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.add-film-form {
+    padding: 38px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(16, 19, 17, 0.96),
+            rgba(8, 10, 9, 0.98)
+        );
+
+    border: 1px solid #202622;
+    border-radius: 22px;
+
+    box-shadow:
+        0 25px 70px rgba(0, 0, 0, 0.35);
+}
+
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.form-section {
+    width: 100%;
+}
+
+
+.form-section-title {
+    display: flex;
+    align-items: flex-start;
+    gap: 17px;
+
+    margin-bottom: 30px;
+}
+
+
+.form-section-title > span {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    background: rgba(54, 245, 122, 0.08);
+
+    border: 1px solid rgba(54, 245, 122, 0.22);
+    border-radius: 10px;
+
+    color: #36f57a;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+
+.form-section-title h2 {
+    margin: 0 0 5px;
+
+    color: #f6f7f6;
+
+    font-size: 20px;
+    font-weight: 700;
+}
+
+
+.form-section-title p {
+    margin: 0;
+
+    color: #777d79;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   GRID
+========================================================= */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 24px;
+}
+
+
+.form-group-wide {
+    grid-column: 1 / -1;
+}
+
+
+/* =========================================================
+   INPUT GROUP
+========================================================= */
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.form-group label {
+    margin-bottom: 9px;
+
+    color: #d8ddda;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+.form-group label span {
+    color: #36f57a;
+}
+
+
+/* =========================================================
+   INPUTS
+========================================================= */
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+
+    padding: 15px 16px;
+
+    box-sizing: border-box;
+
+    background: #090c0a;
+
+    border: 1px solid #292f2b;
+    border-radius: 10px;
+
+    color: #ffffff;
+
+    font: inherit;
+    font-size: 14px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.form-group input {
+    height: 52px;
+}
+
+
+.form-group select {
+    height: 52px;
+
+    cursor: pointer;
+}
+
+
+.form-group textarea {
+    resize: vertical;
+
+    min-height: 160px;
+
+    line-height: 1.6;
+}
+
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #505751;
+}
+
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    background: #0d110e;
+
+    border-color: #35ed75;
+
+    box-shadow:
+        0 0 0 3px rgba(53, 237, 117, 0.08);
+}
+
+
+.form-group small {
+    margin-top: 8px;
+
+    color: #616862;
+
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   INPUT WITH UNIT
+========================================================= */
+
+.input-with-text {
+    position: relative;
+}
+
+
+.input-with-text input {
+    padding-right: 60px;
+}
+
+
+.input-with-text > span {
+    position: absolute;
+
+    top: 50%;
+    right: 16px;
+
+    transform: translateY(-50%);
+
+    color: #687069;
+
+    font-size: 12px;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   DIVIDER
+========================================================= */
+
+.form-divider {
+    width: 100%;
+    height: 1px;
+
+    margin: 38px 0;
+
+    background: #1b211d;
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+
+    margin-top: 40px;
+    padding-top: 30px;
+
+    border-top: 1px solid #1b211d;
+}
+
+
+.form-actions button {
+    height: 50px;
+
+    padding: 0 24px;
+
+    border-radius: 10px;
+
+    font: inherit;
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.btn-secondary {
+    background: transparent;
+
+    border: 1px solid #343b36;
+
+    color: #c1c6c2;
+}
+
+
+.btn-secondary:hover {
+    background: #111512;
+
+    border-color: #525a54;
+}
+
+
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    background: #35f477;
+
+    border: 1px solid #35f477;
+
+    color: #031006;
+
+    box-shadow:
+        0 10px 25px rgba(53, 244, 119, 0.14);
+}
+
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+
+    background: #50ff89;
+
+    box-shadow:
+        0 13px 30px rgba(53, 244, 119, 0.21);
+}
+
+
+.btn-plus {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 750px) {
+
+    .add-film-page {
+        padding: 55px 0 80px;
+    }
+
+
+    .add-film-container {
+        width: calc(100% - 40px);
+    }
+
+
+    .add-film-form {
+        padding: 25px;
+        border-radius: 17px;
+    }
+
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .form-group-wide {
+        grid-column: auto;
+    }
+
+
+    .form-actions {
+        flex-direction: column-reverse;
+    }
+
+
+    .form-actions button {
+        width: 100%;
+    }
+
+}
+
+
+@media (max-width: 450px) {
+
+    .add-film-container {
+        width: calc(100% - 30px);
+    }
+
+
+    .add-film-form {
+        padding: 20px;
+    }
+
+
+    .form-section-title {
+        gap: 12px;
+    }
+
+
+    .form-section-title > span {
+        width: 34px;
+        height: 34px;
+    }
+
+}

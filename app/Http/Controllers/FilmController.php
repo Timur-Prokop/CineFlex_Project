@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use App\Models\Film;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 
 class FilmController extends Controller
 {
@@ -40,8 +41,36 @@ class FilmController extends Controller
         ]);
     }
 
-    public function create()
+    public function create(Request $request): RedirectResponse
     {
+        $this->authorize('create', Film::class);
+
+        $validated = $request->validate([
+                'title' => 'required',
+                'duration' => ['required', 'integer', 'min:25', 'max:400'],
+                'age-group' => 'required',
+                'pic-path' => ['required', 'string'],
+                'page-pic-path' => ['reqired', 'string'],
+                'description' => ['required', 'min:50', 'max:1000']
+            ],
+            [
+                'title.required' => 'Voeg een titel van de film toe.',
+                'duration.required' => 'Wat is de lengte van de film?',
+                'age-group.required' => 'Kies een leeftijdskijkwijzer voor de film.',
+                'pic-path.required' => 'Voeg een afbeelding toe.',
+                'page-pic-path.required' => 'Voeg een afbeelding toe.',
+                'description.required' => 'Voeg een beschrijving.',
+            ]
+        );
+
+        $film = Film::create([
+           ''
+        ]);
+
+        return redirect('/films');
+    }
+
+    public function new(){
         return view('films.add_film');
     }
 

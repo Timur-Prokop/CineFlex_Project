@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/header.css' ])
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/header.css', 'resources/js/header.js' ])
 
     <meta charset="UTF-8">
     <meta name="viewport"
