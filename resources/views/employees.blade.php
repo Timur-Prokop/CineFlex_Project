@@ -1,3 +1,4 @@
+@can('can-access-manager-area')
 @extends('layouts.layout')
 
 @section('content')
@@ -237,3 +238,4 @@
         }
     </script>
 @endsection
+@endcan

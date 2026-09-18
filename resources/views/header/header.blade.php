@@ -22,10 +22,12 @@
                 Catalog
             </a>
 
+            @can('can-see-workers')
             <a href="{{ route('medewerkers.index') }}"
                class="header__link {{ request()->routeIs('medewerkers') ? 'active' : '' }}">
                 Medewerkers
             </a>
+            @endcan
 
             <a href="{{ route('contact') }}"
                class="header__link {{ request()->routeIs('contact') ? 'active' : '' }}">
