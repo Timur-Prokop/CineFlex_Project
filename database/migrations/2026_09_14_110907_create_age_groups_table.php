@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('age_groups', function (Blueprint $table) {
             $table->id();
             $table->string('age');
+            $table->string('pic_path');
         });
     }
 

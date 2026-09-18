@@ -30,6 +30,8 @@ Route::get('/contact', function () {
 
 
 
+
+
 // login
 
 Route::get('/login', [LoginController::class, 'show'])
@@ -54,4 +56,7 @@ Route::get('reset-password', [PasswordController::class, 'show'])
 
 Route::get('/films', [FilmController::class, 'index'])
     ->name('films');
+
+Route::get('/films/add', [FilmController::class, 'create'])
+    ->name('film_create');
 

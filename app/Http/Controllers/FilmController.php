@@ -12,16 +12,37 @@ class FilmController extends Controller
      */
     public function index()
     {
-        $films = DB::table('films')->get();
+        $films = DB::table('films')
+            ->join('age_groups', 'films.fk_id_age_group', '=', 'age_groups.id')
+            ->select('films.*', 'age_groups.pic_path as age_group_pic',
+                             'age_groups.age as age_group')
+            ->get();
 
-        return view('films', [
-            'films' => $films
+        $warnings = DB::table('films_warnings')
+            ->join(
+                'warnings',
+                'films_warnings.fk_id_warning',
+                '=',
+                'warnings.id'
+            )
+            ->select(
+                'films_warnings.fk_id_film',
+                'warnings.id',
+                'warnings.name',
+                'warnings.pic_path'
+            )
+            ->get()
+            ->groupBy('fk_id_film');
+
+        return view('films.films', [
+            'films' => $films,
+            'warnings' => $warnings
         ]);
     }
 
     public function create()
     {
-        //
+        return view('films.add_film');
     }
 
     public function store(Request $request)

@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 
 @section('content')
-@vite('/resources/css/films.css')
+@vite(['/resources/css/films.css', '/resources/js/films.js'])
     <main class="films-page">
         <section class="films-hero">
             <div class="page-container">
@@ -53,11 +53,11 @@
                             >
                         </div>
 
-                        <select class="film-filter">
+                        <select class="film-filter" id="film-filter">
                             <option value="">Alle films</option>
-                            <option value="short">Tot 90 min</option>
+                            <option value="small">Tot 90 min</option>
                             <option value="medium">90 - 120 min</option>
-                            <option value="long">120+ min</option>
+                            <option value="huge">120+ min</option>
                         </select>
                     </div>
                 </div>
@@ -69,8 +69,8 @@
 
                         <article
                             class="film-card"
-                            data-title="{{ strtolower($film->title) }}">
-
+                            data-title="{{ strtolower($film->title) }}"
+                            data-duration=" {{ $film->duration }} ">
                             <a href="#" class="film-card__poster">
                                 @if ($film->pic_path)
                                     <img
@@ -108,34 +108,36 @@
                                 <div class="film-card__top">
                                     <h3>{{ $film->title }}</h3>
 
-                                    <button
-                                        class="film-card__favorite"
-                                        type="button"
-                                        aria-label="Voeg toe aan favorieten"
-                                    >
-                                        ♡
-                                    </button>
-                                </div>
-
-                                @if ($film->description)
-                                    <p>
-                                        {{ Str::limit($film->description, 100) }}
-                                    </p>
-                                @endif
-
-                                <div class="film-card__bottom">
-
-                                <span class="film-card__age">
-                                    {{ $film->fk_id_age_group }}+
-                                </span>
-
-                                    <a href="#" class="film-card__link">
-                                        Meer info
-
-                                        <span>→</span>
-                                    </a>
+                                    <img class="group_age_pic" src=" {{ $film->age_group_pic }}" alt="" title="{{ $film->age_group }} jaar">
 
                                 </div>
+
+{{--                                @if ($film->description)--}}
+{{--                                    <p>--}}
+{{--                                        {{ Str::limit($film->description, 100) }}--}}
+{{--                                    </p>--}}
+{{--                                @endif--}}
+
+{{--                                <div class="film-card__bottom">--}}
+{{--                                    <div class="warnings_images">--}}
+
+{{--                                        @foreach($warnings->get($film->id, collect()) as $warning)--}}
+{{--                                            <img class="group_age_pic" src=" {{ $warning->pic_path }}" alt="" title="{{ $warning->name}}">--}}
+{{--                                            @if($loop->iteration >= 2)--}}
+{{--                                                <h5 class="plus_warnings">+ {{count($warnings->get($film->id, collect())) - 2}}</h5>--}}
+{{--                                                @break--}}
+{{--                                            @endif--}}
+{{--                                        @endforeach--}}
+{{--                                    </div>--}}
+
+
+{{--                                        <a href="#" class="film-card__link">--}}
+{{--                                        Meer info--}}
+
+{{--                                        <span>→</span>--}}
+{{--                                    </a>--}}
+
+{{--                                </div>--}}
                             </div>
                         </article>
 
@@ -159,26 +161,7 @@
 
 
     <script>
-        const searchInput = document.getElementById('filmSearch');
-        const filmCards = document.querySelectorAll('.film-card');
 
-        searchInput.addEventListener('input', function () {
-
-            const searchValue = this.value.toLowerCase();
-
-            filmCards.forEach(card => {
-
-                const title = card.dataset.title;
-
-                if (title.includes(searchValue)) {
-                    card.style.display = '';
-                } else {
-                    card.style.display = 'none';
-                }
-
-            });
-
-        });
     </script>
 
 @endsection
