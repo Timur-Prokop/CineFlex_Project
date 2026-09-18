@@ -83,15 +83,20 @@ Route::get('/profile', [ProfileController::class, 'show'])
 Route::get('/medewerkers', [EmployeeController::class, 'index'])
     ->name('medewerkers.index');
 
-Route::post('/medewerkers', [EmployeeController::class, 'store'])
-    ->name('medewerkers.store');
+// only for manager
+Route::middleware(['auth', 'can:access-manager-area'])->group(function () {
 
-Route::put('/medewerkers/{id}', [EmployeeController::class, 'update'])
-    ->name('medewerkers.update');
+    Route::post('/medewerkers', [EmployeeController::class, 'store'])
+        ->name('medewerkers.store');
 
-Route::delete('/medewerkers/{id}', [EmployeeController::class, 'destroy'])
-    ->name('medewerkers.destroy');
+    Route::put('/medewerkers/{id}', [EmployeeController::class, 'update'])
+        ->name('medewerkers.update');
 
+    Route::delete('/medewerkers/{id}', [EmployeeController::class, 'destroy'])
+        ->name('medewerkers.destroy');
+
+
+});
 
 //  films
 
