@@ -105,7 +105,20 @@ class FilmController extends Controller
 
     public function show(Film $film)
     {
-        //
+        $film->load([
+            'genres',
+            'warnings',
+            'ageGroup',
+            'screenings.auditory',
+        ]);
+
+        $screeningsByDate = $film->screenings
+            ->sortBy('date_time')
+            ->groupBy(function ($screening) {
+                return $screening->date_time->format('Y-m-d');
+            });
+
+        return view('films.film', compact('film', 'screeningsByDate'));
     }
 
     public function edit(Film $film)

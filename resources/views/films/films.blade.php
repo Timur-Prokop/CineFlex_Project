@@ -71,7 +71,7 @@
                             class="film-card"
                             data-title="{{ strtolower($film->title) }}"
                             data-duration=" {{ $film->duration }} ">
-                            <a href="#" class="film-card__poster">
+                            <a href="{{route('show.film', $film->title)}}" class="film-card__poster">
                                 @if ($film->pic_path)
                                     <img
                                         src="{{ asset($film->pic_path) }}"
