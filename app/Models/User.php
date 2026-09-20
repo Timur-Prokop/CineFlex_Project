@@ -16,11 +16,11 @@ use Illuminate\Notifications\Notifiable;
     'surname',
     'date_of_birth',
     'email',
-    'password_hash',
+    'password',
     'fk_role',
 ])]
 #[Hidden([
-    'password_hash',
+    'password',
     'remember_token',
 ])]
 class User extends Authenticatable implements MustVerifyEmail

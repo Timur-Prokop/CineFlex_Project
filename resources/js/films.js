@@ -57,3 +57,35 @@ searchInput.addEventListener('input', function () {
 });
 
 
+
+
+// BUTTON FOR EDITINNGNGNGNGNGN
+
+const editButtons = document.querySelectorAll('.film-edit-button');
+
+editButtons.forEach(button => {
+    button.addEventListener('click', function () {
+        window.location.href = this.dataset.url;
+    });
+});
+
+
+
+// BUTTON FOR DEELETINGGG
+
+
+const deleteForms = document.querySelectorAll('.film-delete-form');
+
+deleteForms.forEach(form => {
+    form.addEventListener('submit', function(event) {
+
+        const confirmed = confirm(
+            'Weet je zeker dat je deze film wilt verwijderen?'
+        );
+
+        if (!confirmed) {
+            event.preventDefault();
+        }
+
+    });
+});

@@ -302,6 +302,9 @@
     margin: 0px auto;
 }
 
+.film-card__content button{
+    cursor: pointer;
+}
 .film-card__overlay {
     position: absolute;
     inset: 0;

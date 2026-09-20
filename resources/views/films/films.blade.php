@@ -111,33 +111,30 @@
                                     <img class="group_age_pic" src=" {{ $film->age_group_pic }}" alt="" title="{{ $film->age_group }} jaar">
 
                                 </div>
+                                @can('can-see-workers')
+                                    <button
+                                        class="film-edit-button"
+                                        data-url = "{{ route('films.edit', $film->id) }}">
+                                        Wijzigen
+                                    </button>
 
-{{--                                @if ($film->description)--}}
-{{--                                    <p>--}}
-{{--                                        {{ Str::limit($film->description, 100) }}--}}
-{{--                                    </p>--}}
-{{--                                @endif--}}
+                                    <form
+                                        action="{{ route('films.delete', $film->id) }}"
+                                        method="POST"
+                                        class="film-delete-form"
+                                    >
+                                        @csrf
+                                        @method('DELETE')
 
-{{--                                <div class="film-card__bottom">--}}
-{{--                                    <div class="warnings_images">--}}
+                                        <button
+                                            type="submit"
+                                            class="film-delete-button"
+                                        >
+                                            Verwijderen
+                                        </button>
+                                    </form>
+                                @endcan
 
-{{--                                        @foreach($warnings->get($film->id, collect()) as $warning)--}}
-{{--                                            <img class="group_age_pic" src=" {{ $warning->pic_path }}" alt="" title="{{ $warning->name}}">--}}
-{{--                                            @if($loop->iteration >= 2)--}}
-{{--                                                <h5 class="plus_warnings">+ {{count($warnings->get($film->id, collect())) - 2}}</h5>--}}
-{{--                                                @break--}}
-{{--                                            @endif--}}
-{{--                                        @endforeach--}}
-{{--                                    </div>--}}
-
-
-{{--                                        <a href="#" class="film-card__link">--}}
-{{--                                        Meer info--}}
-
-{{--                                        <span>→</span>--}}
-{{--                                    </a>--}}
-
-{{--                                </div>--}}
                             </div>
                         </article>
 
