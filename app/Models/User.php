@@ -16,7 +16,7 @@ use Illuminate\Notifications\Notifiable;
     'surname',
     'date_of_birth',
     'email',
-    'password_hash',
+    'password',
     'fk_role',
 ])]
 #[Hidden([
