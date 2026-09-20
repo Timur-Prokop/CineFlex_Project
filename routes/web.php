@@ -8,11 +8,14 @@ use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\HomeController;
 
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+//HOMeeee
+//HOMeeee
+
+Route::get('/', [HomeController::class, 'index'])
+    ->name('home');
 
 
 Route::get('/catalog', function () {
@@ -107,3 +110,12 @@ Route::get('films/add', [FilmController::class, 'new'])
     ->name('show.add.film');
 
 Route::post('films/add', [FilmController::class, 'create']);
+
+Route::get('/films/{film}/edit', [FilmController::class, 'edit'])
+    ->name('films.edit');
+
+Route::post('/films/{film}/update', [FilmController::class, 'update'])
+    ->name('films.update');
+
+Route::delete('/films/{film}', [FilmController::class, 'destroy'])
+    ->name('films.delete');

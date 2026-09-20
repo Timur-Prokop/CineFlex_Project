@@ -87,19 +87,73 @@
                                 <option value="" selected disabled>
                                     Kies leeftijdsgroep
                                 </option>
-
-                                <option value="1">Alle leeftijden</option>
-                                <option value="2">6+</option>
-                                <option value="3">9+</option>
-                                <option value="4">12+</option>
-                                <option value="5">14+</option>
-                                <option value="6">16+</option>
-                                <option value="7">18+</option>
+                                @foreach($age_groups as $age_group)
+                                    <option value="{{$age_group->id}}">{{$age_group->age}}</option>
+                                @endforeach
                             </select>
                         </div>
 
                     </div>
 
+
+                    <div class="form-group kijkwijzer-group">
+                        <div class="kijkwijzer-header">
+                            <div>
+                                <label>
+                                    Kijkwijzers
+                                    <span>*</span>
+                                </label>
+                                <p>
+                                    Kies één of meerdere waarschuwingen die bij deze film horen.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="kijkwijzer-grid">
+
+                            @foreach($warnings as $warning)
+
+                                <label class="kijkwijzer-card">
+
+                                    <input
+                                        type="checkbox"
+                                        name="warnings[]"
+                                        value="{{ $warning->id }}"
+                                    >
+
+                                    <div class="kijkwijzer-card__content">
+
+                                        <div class="kijkwijzer-card__icon">
+
+                                            @if($warning->pic_path)
+                                                <img
+                                                    src="{{ $warning->pic_path }}"
+                                                    alt="{{ $warning->name }}"
+                                                >
+                                            @endif
+
+                                        </div>
+
+                                        <div class="kijkwijzer-card__text">
+                                            <strong>
+                                                {{ ucfirst(str_replace('_', ' ', $warning->name)) }}
+                                            </strong>
+
+                                        </div>
+
+                                        <div class="kijkwijzer-card__check">
+                                            ✓
+                                        </div>
+
+                                    </div>
+
+                                </label>
+
+                            @endforeach
+
+                        </div>
+
+                    </div>
                 </div>
 
 

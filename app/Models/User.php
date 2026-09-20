@@ -20,7 +20,7 @@ use Illuminate\Notifications\Notifiable;
     'fk_role',
 ])]
 #[Hidden([
-    'password_hash',
+    'password',
     'remember_token',
 ])]
 class User extends Authenticatable implements MustVerifyEmail
