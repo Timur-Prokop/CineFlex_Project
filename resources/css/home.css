@@ -354,16 +354,13 @@
 
 
 @keyframes floatingPoster {
-
     0%,
     100% {
         transform: translateY(0);
     }
-
     50% {
         transform: translateY(-12px);
     }
-
 }
 
 
@@ -681,7 +678,7 @@
     display: grid;
 
     grid-template-columns:
-        repeat(4, minmax(0, 1fr));
+        repeat(7, minmax(0, 1fr));
 
     gap: 20px;
 }

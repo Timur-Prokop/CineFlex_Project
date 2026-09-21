@@ -3,23 +3,23 @@
 @section('content')
 @vite(['/resources/css/films.css', '/resources/js/films.js'])
     <main class="films-page">
-        <section class="films-hero">
-            <div class="page-container">
-                <div class="films-hero__content">
-                    <span class="section-label">CINEFLEX FILMS</span>
+{{--        <section class="films-hero">--}}
+{{--            <div class="page-container">--}}
+{{--                <div class="films-hero__content">--}}
+{{--                    <span class="section-label">CINEFLEX FILMS</span>--}}
 
-                    <h1>
-                        Ontdek jouw volgende
-                        <span>favoriete film</span>
-                    </h1>
+{{--                    <h1>--}}
+{{--                        Ontdek jouw volgende--}}
+{{--                        <span>favoriete film</span>--}}
+{{--                    </h1>--}}
 
-                    <p>
-                        Bekijk alle films die momenteel bij CINEFLEX beschikbaar zijn.
-                        Van actie en avontuur tot drama en familie.
-                    </p>
-                </div>
-            </div>
-        </section>
+{{--                    <p>--}}
+{{--                        Bekijk alle films die momenteel bij CINEFLEX beschikbaar zijn.--}}
+{{--                        Van actie en avontuur tot drama en familie.--}}
+{{--                    </p>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </section>--}}
 
 
         <section class="films-section">
