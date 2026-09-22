@@ -111,7 +111,7 @@
                                     <img class="group_age_pic" src=" {{ $film->age_group_pic }}" alt="" title="{{ $film->age_group }} jaar">
 
                                 </div>
-                                @can('can-see-workers')
+                                @can('can-access-worker-area')
                                     <button
                                         class="film-edit-button"
                                         data-url = "{{ route('films.edit', $film->id) }}">

@@ -159,7 +159,7 @@
                                         @elseif ($carbonDate->isTomorrow())
                                             Morgen
                                         @else
-                                            {{ $carbonDate->translatedFormat('D d MMM') }}
+                                            {{ $carbonDate->translatedFormat('D d M') }}
                                         @endif
 
                                     </span>

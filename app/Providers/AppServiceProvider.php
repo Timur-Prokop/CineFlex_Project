@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Film;
+use App\Policies\FilmPolicy;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use App\Models\User;
@@ -26,12 +28,23 @@ class AppServiceProvider extends ServiceProvider
     {
         Gate::policy(User::class, EmployeePolicy::class);
 
+        Gate::policy(Film::class, FilmPolicy::class);
+
         Gate::define('can-access-manager-area', function (User $user) {
             return $user->isManager();
         });
 
         Gate::define('can-see-workers', function (User $user) {
             return $user->isManager() || $user->isWorker();
+        });
+
+
+        Gate::define('can-access-worker-area', function (User $user) {
+            return $user->isWorker();
+        });
+
+        Gate::define('can-access-client-area', function (User $user) {
+            return $user->isClient();
         });
 
         VerifyEmail::toMailUsing(function ($notifiable, $url) {
