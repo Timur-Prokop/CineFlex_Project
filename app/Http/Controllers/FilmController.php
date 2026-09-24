@@ -8,9 +8,6 @@ use Illuminate\Http\RedirectResponse;
 
 class FilmController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $films = DB::table('films')

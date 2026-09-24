@@ -36,7 +36,6 @@
                 @csrf
 
 
-                {{-- ALGEMENE INFORMATIE --}}
 
                 <div class="form-section">
 
@@ -75,7 +74,6 @@
                         </div>
 
 
-                        {{-- DUUR --}}
 
                         <div class="form-group">
 
@@ -103,7 +101,6 @@
                         </div>
 
 
-                        {{-- LEEFTIJDSGROEP --}}
 
                         <div class="form-group">
 
@@ -141,7 +138,6 @@
                     </div>
 
 
-                    {{-- KIJKWIJZERS --}}
 
                     <div class="form-group kijkwijzer-group">
 
@@ -234,7 +230,6 @@
                 <div class="form-divider"></div>
 
 
-                {{-- AFBEELDINGEN --}}
 
                 <div class="form-section">
 
@@ -301,7 +296,6 @@
                 <div class="form-divider"></div>
 
 
-                {{-- BESCHRIJVING --}}
 
                 <div class="form-section">
 
