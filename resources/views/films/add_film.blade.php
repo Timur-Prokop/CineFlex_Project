@@ -1,7 +1,7 @@
-
 @extends('layouts.layout')
 
 @section('content')
+
     @vite('resources/css/add_film.css')
 
     <div class="add-film-page">
@@ -19,8 +19,24 @@
                 </div>
             </div>
 
+            @if ($errors->any())
+                <div class="form-errors">
+                    <div class="form-errors__title">
+                        Er zijn fouten gevonden
+                    </div>
+
+                    <ul class="form-errors__list">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
 
             <form class="add-film-form" action="" method="POST">
+
+                @csrf
 
                 <div class="form-section">
 
@@ -46,9 +62,14 @@
                                 type="text"
                                 id="title"
                                 name="title"
+                                value="{{ old('title') }}"
                                 placeholder="Bijvoorbeeld: Interstellar"
                                 required
                             >
+
+                            @error('title')
+                            <span class="form-error">{{ $message }}</span>
+                            @enderror
                         </div>
 
 
@@ -63,6 +84,7 @@
                                     type="number"
                                     id="duration"
                                     name="duration"
+                                    value="{{ old('duration') }}"
                                     placeholder="120"
                                     min="1"
                                     required
@@ -70,6 +92,10 @@
 
                                 <span>min</span>
                             </div>
+
+                            @error('duration')
+                            <span class="form-error">{{ $message }}</span>
+                            @enderror
                         </div>
 
 
@@ -84,13 +110,24 @@
                                 name="fk_id_age_group"
                                 required
                             >
-                                <option value="" selected disabled>
+                                <option value="" disabled
+                                    {{ old('fk_id_age_group') ? '' : 'selected' }}>
                                     Kies leeftijdsgroep
                                 </option>
+
                                 @foreach($age_groups as $age_group)
-                                    <option value="{{$age_group->id}}">{{$age_group->age}}</option>
+                                    <option
+                                        value="{{ $age_group->id }}"
+                                        {{ old('fk_id_age_group') == $age_group->id ? 'selected' : '' }}
+                                    >
+                                        {{ $age_group->age }}
+                                    </option>
                                 @endforeach
                             </select>
+
+                            @error('fk_id_age_group')
+                            <span class="form-error">{{ $message }}</span>
+                            @enderror
                         </div>
 
                     </div>
@@ -103,11 +140,13 @@
                                     Kijkwijzers
                                     <span>*</span>
                                 </label>
+
                                 <p>
                                     Kies één of meerdere waarschuwingen die bij deze film horen.
                                 </p>
                             </div>
                         </div>
+
 
                         <div class="kijkwijzer-grid">
 
@@ -119,6 +158,7 @@
                                         type="checkbox"
                                         name="warnings[]"
                                         value="{{ $warning->id }}"
+                                        {{ in_array($warning->id, old('warnings', [])) ? 'checked' : '' }}
                                     >
 
                                     <div class="kijkwijzer-card__content">
@@ -138,7 +178,6 @@
                                             <strong>
                                                 {{ ucfirst(str_replace('_', ' ', $warning->name)) }}
                                             </strong>
-
                                         </div>
 
                                         <div class="kijkwijzer-card__check">
@@ -153,7 +192,12 @@
 
                         </div>
 
+                        @error('warnings')
+                        <span class="form-error">{{ $message }}</span>
+                        @enderror
+
                     </div>
+
                 </div>
 
 
@@ -183,12 +227,17 @@
                                 type="url"
                                 id="pic-path"
                                 name="pic_path"
+                                value="{{ old('pic_path') }}"
                                 placeholder="https://..."
                             >
 
                             <small>
                                 Verticale afbeelding voor de filmkaart.
                             </small>
+
+                            @error('pic_path')
+                            <span class="form-error">{{ $message }}</span>
+                            @enderror
                         </div>
 
 
@@ -201,12 +250,17 @@
                                 type="url"
                                 id="page-pic-path"
                                 name="page_pic_path"
+                                value="{{ old('page_pic_path') }}"
                                 placeholder="https://..."
                             >
 
                             <small>
                                 Grote afbeelding voor de detailpagina.
                             </small>
+
+                            @error('page_pic_path')
+                            <span class="form-error">{{ $message }}</span>
+                            @enderror
                         </div>
 
                     </div>
@@ -241,7 +295,11 @@
                             rows="7"
                             placeholder="Schrijf hier een korte beschrijving van de film..."
                             required
-                        ></textarea>
+                        >{{ old('description') }}</textarea>
+
+                        @error('description')
+                        <span class="form-error">{{ $message }}</span>
+                        @enderror
                     </div>
 
                 </div>
@@ -252,6 +310,7 @@
                     <button
                         type="button"
                         class="btn-secondary"
+                        onclick="{{back()}}"
                     >
                         Annuleren
                     </button>
@@ -271,6 +330,5 @@
         </div>
 
     </div>
-
 
 @endsection

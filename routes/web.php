@@ -126,22 +126,26 @@ Route::middleware(['auth', 'can:access-manager-area'])->group(function () {
 
 //  films
 
+Route::middleware(['can:can-access-worker-area'])->group(function () {
+
+    Route::get('/films/add', [FilmController::class, 'new'])
+        ->name('show.add.film');
+
+    Route::post('/films/add', [FilmController::class, 'create']);
+
+    Route::get('/films/{film}/edit', [FilmController::class, 'edit'])
+        ->name('films.edit');
+
+    Route::post('/films/{film}/update', [FilmController::class, 'update'])
+        ->name('films.update');
+
+    Route::delete('/films/{film}', [FilmController::class, 'destroy'])
+        ->name('films.delete');
+});
+
 Route::get('/films', [FilmController::class, 'index'])
     ->name('films');
-
-Route::get('/films/add', [FilmController::class, 'new'])
-    ->name('show.add.film');
 
 Route::get('/films/{film:title}', [FilmController::class, 'show'])
     ->name('show.film');
 
-Route::post('/films/add', [FilmController::class, 'create']);
-
-Route::get('/films/{film}/edit', [FilmController::class, 'edit'])
-    ->name('films.edit');
-
-Route::post('/films/{film}/update', [FilmController::class, 'update'])
-    ->name('films.update');
-
-Route::delete('/films/{film}', [FilmController::class, 'destroy'])
-    ->name('films.delete');

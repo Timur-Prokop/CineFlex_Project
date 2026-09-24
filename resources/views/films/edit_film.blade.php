@@ -2,7 +2,7 @@
 
 @section('content')
 
-    @vite('resources/css/add_film.css', 'resources/js/films.js')
+    @vite('resources/css/add_film.css')
 
     <div class="add-film-page">
 
@@ -11,9 +11,9 @@
             <div class="add-film-header">
                 <div>
 
-                <span class="add-film-label">
-                    CINEFLEX ADMIN
-                </span>
+                    <span class="add-film-label">
+                        CINEFLEX ADMIN
+                    </span>
 
                     <h1>Film bewerken</h1>
 
@@ -25,6 +25,23 @@
 
                 </div>
             </div>
+
+
+            @if ($errors->any())
+                <div class="form-errors">
+
+                    <div class="form-errors__title">
+                        Er zijn fouten gevonden
+                    </div>
+
+                    <ul class="form-errors__list">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+
+                </div>
+            @endif
 
 
             <form
@@ -72,6 +89,10 @@
                                 required
                             >
 
+                            @error('title')
+                            <span class="form-error">{{ $message }}</span>
+                            @enderror
+
                         </div>
 
 
@@ -99,6 +120,10 @@
                                 <span>min</span>
 
                             </div>
+
+                            @error('duration')
+                            <span class="form-error">{{ $message }}</span>
+                            @enderror
 
                         </div>
 
@@ -135,6 +160,10 @@
                                 @endforeach
 
                             </select>
+
+                            @error('fk_id_age_group')
+                            <span class="form-error">{{ $message }}</span>
+                            @enderror
 
                         </div>
 
@@ -176,7 +205,13 @@
                                         value="{{ $warning->id }}"
 
                                         @checked(
-                                            $filmWarnings->contains($warning->id)
+                                            in_array(
+                                                $warning->id,
+                                                old(
+                                                    'warnings',
+                                                    $filmWarnings->toArray()
+                                                )
+                                            )
                                         )
                                     >
 
@@ -226,6 +261,10 @@
 
                         </div>
 
+                        @error('warnings')
+                        <span class="form-error">{{ $message }}</span>
+                        @enderror
+
                     </div>
 
                 </div>
@@ -270,6 +309,10 @@
                                 Verticale afbeelding voor de filmkaart.
                             </small>
 
+                            @error('pic_path')
+                            <span class="form-error">{{ $message }}</span>
+                            @enderror
+
                         </div>
 
 
@@ -290,6 +333,10 @@
                             <small>
                                 Grote afbeelding voor de detailpagina.
                             </small>
+
+                            @error('page_pic_path')
+                            <span class="form-error">{{ $message }}</span>
+                            @enderror
 
                         </div>
 
@@ -331,6 +378,10 @@
                             required
                         >{{ old('description', $film->description) }}</textarea>
 
+                        @error('description')
+                        <span class="form-error">{{ $message }}</span>
+                        @enderror
+
                     </div>
 
                 </div>
@@ -342,7 +393,7 @@
                         type="button"
                         class="btn-secondary"
                     >
-                        <a href="/films">Annuleren</a>
+                        <a href="{{ back()}}">Annuleren</a>
                     </button>
 
 

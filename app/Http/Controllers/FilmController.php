@@ -93,7 +93,9 @@ class FilmController extends Controller
         $this->authorize('create', Film::class);
 
         $warnings = DB::table('warnings')->get();
-        $age_groups = DB::table('age_groups')->get();
+        $age_groups = DB::table('age_groups')
+            ->orderBy('id', 'asc')
+            ->get();
 
         return view('films.add_film', [
             'warnings' => $warnings,
@@ -128,7 +130,9 @@ class FilmController extends Controller
     {
         $this->authorize('update', $film);
 
-        $age_groups = DB::table('age_groups')->get();
+        $age_groups = DB::table('age_groups')
+            ->orderBy('id', 'desc')
+            ->get();
 
         $warnings = DB::table('warnings')->get();
 

@@ -693,3 +693,42 @@
     }
 
 }
+
+.form-errors {
+    margin-bottom: 30px;
+    padding: 18px 20px;
+    background: rgba(255, 107, 107, 0.08);
+    border: 1px solid rgba(255, 107, 107, 0.35);
+    border-radius: 14px;
+}
+
+.form-errors__title {
+    margin-bottom: 8px;
+    color: #ff6b6b;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.form-errors__list {
+    margin: 0;
+    padding-left: 20px;
+    color: #ddd;
+}
+
+.form-errors__list li {
+    margin: 4px 0;
+}
+
+.form-error {
+    display: block;
+    margin-top: 7px;
+    color: #ff6b6b;
+    font-size: 13px;
+}
+
+.form-group input.is-invalid,
+.form-group select.is-invalid,
+.form-group textarea.is-invalid {
+    border-color: #ff6b6b;
+    box-shadow: 0 0 0 1px rgba(255, 107, 107, 0.15);
+}
