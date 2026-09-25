@@ -3,25 +3,6 @@
 @section('content')
 @vite(['/resources/css/films.css', '/resources/js/films.js'])
     <main class="films-page">
-{{--        <section class="films-hero">--}}
-{{--            <div class="page-container">--}}
-{{--                <div class="films-hero__content">--}}
-{{--                    <span class="section-label">CINEFLEX FILMS</span>--}}
-
-{{--                    <h1>--}}
-{{--                        Ontdek jouw volgende--}}
-{{--                        <span>favoriete film</span>--}}
-{{--                    </h1>--}}
-
-{{--                    <p>--}}
-{{--                        Bekijk alle films die momenteel bij CINEFLEX beschikbaar zijn.--}}
-{{--                        Van actie en avontuur tot drama en familie.--}}
-{{--                    </p>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </section>--}}
-
-
         <section class="films-section">
             <div class="page-container">
                 <div class="films-section__header">
@@ -111,29 +92,6 @@
                                     <img class="group_age_pic" src=" {{ $film->age_group_pic }}" alt="" title="{{ $film->age_group }} jaar">
 
                                 </div>
-                                @can('can-see-workers')
-                                    <button
-                                        class="film-edit-button"
-                                        data-url = "{{ route('films.edit', $film->id) }}">
-                                        Wijzigen
-                                    </button>
-
-                                    <form
-                                        action="{{ route('films.delete', $film->id) }}"
-                                        method="POST"
-                                        class="film-delete-form"
-                                    >
-                                        @csrf
-                                        @method('DELETE')
-
-                                        <button
-                                            type="submit"
-                                            class="film-delete-button"
-                                        >
-                                            Verwijderen
-                                        </button>
-                                    </form>
-                                @endcan
 
                             </div>
                         </article>

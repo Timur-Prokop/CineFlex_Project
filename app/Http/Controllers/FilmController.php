@@ -41,7 +41,7 @@ class FilmController extends Controller
 
     public function create(Request $request): RedirectResponse
     {
-//        $this->authorize('create', Film::class);
+        $this->authorize('create', Film::class);
 
         $validated = $request->validate(
             [
@@ -86,6 +86,9 @@ class FilmController extends Controller
 
 
     public function new(){
+
+        $this->authorize('create', Film::class);
+
         $warnings = DB::table('warnings')->get();
         $age_groups = DB::table('age_groups')->get();
 
