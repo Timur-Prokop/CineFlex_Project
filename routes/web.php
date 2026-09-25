@@ -50,22 +50,19 @@ Route::middleware(['guest'])->group(function () {
 
     Route::post('/register', [RegisterController::class, 'store']);
 
+    Route::get('/password/reset', [PasswordController::class, 'show'])
+    ->name('password.reset');
+
 });
 
 //----------------------------------------------------------//
 
 
 
-//---------------------password reset, logout, email verification------------------------//
 
-Route::middleware(['auth'])->group(function () {
+//---------------------email verification------------------------//
 
-    Route::post('/logout', [LoginController::class, 'logout'])
-        ->name('logout');
-
-
-    Route::get('reset-password', [PasswordController::class, 'show'])
-        ->name('reset.password');
+Route::middleware(['auth', 'not.verified'])->group(function () {
 
     Route::post('/verification/send-verification-link', [VerificationController::class, 'sendLink'])
         ->name('send.verification.link');
@@ -95,22 +92,34 @@ Route::middleware(['auth'])->group(function () {
     })->name('account.is.verified');
 });
 
+//-------------------------------------------------------------------//
 
 
 
 
-//profile
+//----------------------------profile---------------------------//
 
-Route::get('/profile', [ProfileController::class, 'show'])
-    ->middleware('auth')->name('profile');
+Route::middleware(['auth', 'verified'])->group(function () {
 
-// medewerkers
+    Route::get('/profile', [ProfileController::class, 'show'])
+        ->name('profile');
+
+    Route::post('/logout', [LoginController::class, 'logout'])
+        ->name('logout');
+});
+
+//--------------------------------------------------------------//
+
+
+
+
+//----------------------------medewerkers---------------------------//
 
 Route::get('/medewerkers', [EmployeeController::class, 'index'])
     ->name('medewerkers.index');
 
 // only for manager
-Route::middleware(['auth', 'can:access-manager-area'])->group(function () {
+Route::middleware(['auth', 'verified', 'can:access-manager-area'])->group(function () {
 
     Route::post('/medewerkers', [EmployeeController::class, 'store'])
         ->name('medewerkers.store');
@@ -120,13 +129,15 @@ Route::middleware(['auth', 'can:access-manager-area'])->group(function () {
 
     Route::delete('/medewerkers/{id}', [EmployeeController::class, 'destroy'])
         ->name('medewerkers.destroy');
-
-
 });
 
-//  films
+//-------------------------------------------------------------------//
 
-Route::middleware(['can:can-access-worker-area'])->group(function () {
+
+
+
+//----------------------------------------films------------------------------------//
+Route::middleware(['can:can-access-worker-area'])->group(function () { // only for workers
 
     Route::get('/films/add', [FilmController::class, 'new'])
         ->name('show.add.film');
@@ -148,4 +159,6 @@ Route::get('/films', [FilmController::class, 'index'])
 
 Route::get('/films/{film:title}', [FilmController::class, 'show'])
     ->name('show.film');
+
+//---------------------------------------------------------------------------------//
 
