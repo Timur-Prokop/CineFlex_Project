@@ -307,13 +307,12 @@
 
                 <div class="form-actions">
 
-                    <button
-                        type="button"
+                    <a
+                        href="{{route('films')}}"
                         class="btn-secondary"
-                        onclick="{{back()}}"
                     >
                         Annuleren
-                    </button>
+                    </a>
 
                     <button
                         type="submit"

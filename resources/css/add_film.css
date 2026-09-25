@@ -576,20 +576,38 @@
         box-shadow 0.2s ease;
 }
 
-
 .btn-secondary {
-    background: transparent;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 
+    height: 50px;
+    padding: 0 24px;
+    box-sizing: border-box;
+
+    background: transparent;
     border: 1px solid #343b36;
+    border-radius: 10px;
 
     color: #c1c6c2;
-}
+    font: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
 
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
 
 .btn-secondary:hover {
     background: #111512;
-
     border-color: #525a54;
+    color: #ffffff;
 }
 
 

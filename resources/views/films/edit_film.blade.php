@@ -389,12 +389,9 @@
 
                 <div class="form-actions">
 
-                    <button
-                        type="button"
-                        class="btn-secondary"
-                    >
-                        <a href="{{ back()}}">Annuleren</a>
-                    </button>
+                    <a href="{{ route('show.film', $film->title) }}" class="btn-secondary">
+                        Annuleren
+                    </a>
 
 
                     <button
