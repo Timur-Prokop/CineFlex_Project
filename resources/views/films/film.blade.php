@@ -21,7 +21,6 @@
             </div>
         </section>
 
-
         <div class="page-container film-container">
 
             <aside class="film-sidebar">
@@ -42,11 +41,9 @@
 
                 </div>
 
-
                 <h2 class="film-sidebar__name">
                     {{ $film->title }}
                 </h2>
-
 
                 @if ($film->genres->isNotEmpty())
                     <div class="film-sidebar__genres">
@@ -54,16 +51,38 @@
                     </div>
                 @endif
 
+                @can('can-access-worker-area')
+                    <div class="film-sidebar__actions">
 
-                <a
-                    href="#screenings"
-                    class="film-btn film-btn--reserve"
-                >
-                    Reserveren
-                </a>
+                        <a
+                            href="{{ route('films.edit', $film->id) }}"
+                            class="film-btn--edit"
+                        >
+                            Bewerken
+                        </a>
+
+                        <form
+                            action="{{ route('films.delete', $film->id) }}"
+                            method="POST"
+                            class="film-delete-form"
+                            id="delete-film-form"
+                        >
+                            @csrf
+                            @method('DELETE')
+
+                            <button
+                                type="button"
+                                class="film-btn--delete"
+                                onclick="openDeleteModal()"
+                            >
+                                Verwijderen
+                            </button>
+                        </form>
+
+                    </div>
+                @endcan
 
             </aside>
-
 
             <section class="film-main">
 
@@ -72,7 +91,6 @@
                     <h1 class="film-main__title">
                         {{ $film->title }}
                     </h1>
-
 
                     <div class="film-main__kijkwijzers">
 
@@ -86,7 +104,6 @@
                             >
 
                         @endif
-
 
                         @if ($film->warnings->isNotEmpty())
 
@@ -107,16 +124,13 @@
 
                 </header>
 
-
                 <hr class="film-main__divider">
-
 
                 <div class="film-main__description">
                     <p>
                         {{ $film->description }}
                     </p>
                 </div>
-
 
                 <section
                     class="film-screenings"
@@ -134,7 +148,6 @@
                         </h2>
 
                     </div>
-
 
                     @if (!empty($screeningsByDate) && count($screeningsByDate) > 0)
 
@@ -174,7 +187,6 @@
 
                         </div>
 
-
                         <div class="film-screenings__panels">
 
                             @foreach ($screeningsByDate as $date => $sessions)
@@ -197,7 +209,6 @@
                                                     {{ $screening->date_time->format('H:i') }}
                                                 </div>
 
-
                                                 <div class="screening-item__details">
 
                                                     <span class="screening-item__auditory">
@@ -209,7 +220,6 @@
                                                     </span>
 
                                                 </div>
-
 
                                                 <div class="screening-item__action">
                                                     Selecteer stoel →
@@ -247,7 +257,6 @@
 
     </main>
 
-
     <script>
         function switchDatePanel(panelId, tabButton) {
             document.querySelectorAll('.film-date-panel').forEach(function (panel) {
@@ -260,6 +269,68 @@
 
             document.getElementById(panelId).classList.add('film-date-panel--active');
             tabButton.classList.add('film-date-tab--active');
+        }
+    </script>
+
+    {{-- Delete confirmation modal --}}
+    <div class="delete-modal" id="delete-modal">
+
+        <div
+            class="delete-modal__overlay"
+            onclick="closeDeleteModal()"
+        ></div>
+
+        <div class="delete-modal__content">
+
+            <h2>Film verwijderen?</h2>
+
+            <p>
+                Weet je zeker dat je
+                <strong>{{ $film->title }}</strong>
+                wilt verwijderen?
+            </p>
+
+            <div class="delete-modal__actions">
+
+                <button
+                    type="button"
+                    class="delete-modal__cancel"
+                    onclick="closeDeleteModal()"
+                >
+                    Annuleren
+                </button>
+
+                <button
+                    type="button"
+                    class="delete-modal__confirm"
+                    onclick="confirmDelete()"
+                >
+                    Ja, verwijderen
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        function openDeleteModal() {
+            document.getElementById('delete-modal')
+                .classList.add('delete-modal--active');
+        }
+
+        function closeDeleteModal() {
+            document.getElementById('delete-modal')
+                .classList.remove('delete-modal--active');
+        }
+
+        function confirmDelete() {
+            const form = document.getElementById('delete-film-form');
+
+            if (form) {
+                form.requestSubmit();
+            }
         }
     </script>
 

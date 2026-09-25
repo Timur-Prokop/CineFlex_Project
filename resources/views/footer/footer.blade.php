@@ -16,10 +16,10 @@
             </div>
 
             <nav class="footer-nav">
-                <a href="#">Home</a>
-                <a href="#">Films</a>
-                <a href="#">Catalog</a>
-                <a href="#">Contact</a>
+                <a href="{{route('home')}}">Home</a>
+                <a href="{{route('films')}}">Films</a>
+                <a href="{{route('catalog')}}">Catalog</a>
+                <a href="{{route('contact')}}">Contact</a>
             </nav>
 
         </div>

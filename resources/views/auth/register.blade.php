@@ -105,7 +105,7 @@
                         type="email"
                         id="email"
                         name="email"
-                        value="{{ old('email') }}"
+                        value="{{ old('email', request('email')) }}"
                         class="form-input"
                         autocomplete="email"
                         required

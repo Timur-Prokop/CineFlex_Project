@@ -9,7 +9,6 @@ use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\PlanningController;
 
 
 //-------------------------HOMeeee--------------------------//
@@ -51,22 +50,19 @@ Route::middleware(['guest'])->group(function () {
 
     Route::post('/register', [RegisterController::class, 'store']);
 
+    Route::get('/password/reset', [PasswordController::class, 'show'])
+    ->name('password.reset');
+
 });
 
 //----------------------------------------------------------//
 
 
 
-//---------------------password reset, logout, email verification------------------------//
 
-Route::middleware(['auth'])->group(function () {
+//---------------------email verification------------------------//
 
-    Route::post('/logout', [LoginController::class, 'logout'])
-        ->name('logout');
-
-
-    Route::get('reset-password', [PasswordController::class, 'show'])
-        ->name('reset.password');
+Route::middleware(['auth', 'not.verified'])->group(function () {
 
     Route::post('/verification/send-verification-link', [VerificationController::class, 'sendLink'])
         ->name('send.verification.link');
@@ -96,22 +92,34 @@ Route::middleware(['auth'])->group(function () {
     })->name('account.is.verified');
 });
 
+//-------------------------------------------------------------------//
 
 
 
 
-//profile
+//----------------------------profile---------------------------//
 
-Route::get('/profile', [ProfileController::class, 'show'])
-    ->middleware('auth')->name('profile');
+Route::middleware(['auth', 'verified'])->group(function () {
 
-// medewerkers
+    Route::get('/profile', [ProfileController::class, 'show'])
+        ->name('profile');
+
+    Route::post('/logout', [LoginController::class, 'logout'])
+        ->name('logout');
+});
+
+//--------------------------------------------------------------//
+
+
+
+
+//----------------------------medewerkers---------------------------//
 
 Route::get('/medewerkers', [EmployeeController::class, 'index'])
     ->name('medewerkers.index');
 
 // only for manager
-Route::middleware(['auth', 'can:access-manager-area'])->group(function () {
+Route::middleware(['auth', 'verified', 'can:access-manager-area'])->group(function () {
 
     Route::post('/medewerkers', [EmployeeController::class, 'store'])
         ->name('medewerkers.store');
@@ -121,31 +129,39 @@ Route::middleware(['auth', 'can:access-manager-area'])->group(function () {
 
     Route::delete('/medewerkers/{id}', [EmployeeController::class, 'destroy'])
         ->name('medewerkers.destroy');
-
-
 });
 
-//  films
+//-------------------------------------------------------------------//
+
+
+
+
+//----------------------------------------films------------------------------------//
+Route::middleware(['can:can-access-worker-area'])->group(function () { // only for workers
+
+    Route::get('/films/add', [FilmController::class, 'new'])
+        ->name('show.add.film');
+
+    Route::post('/films/add', [FilmController::class, 'create']);
+
+    Route::get('/films/{film}/edit', [FilmController::class, 'edit'])
+        ->name('films.edit');
+
+    Route::post('/films/{film}/update', [FilmController::class, 'update'])
+        ->name('films.update');
+
+    Route::delete('/films/{film}', [FilmController::class, 'destroy'])
+        ->name('films.delete');
+});
 
 Route::get('/films', [FilmController::class, 'index'])
     ->name('films');
 
-Route::get('/films/add', [FilmController::class, 'new'])
-    ->name('show.add.film');
-
 Route::get('/films/{film:title}', [FilmController::class, 'show'])
     ->name('show.film');
 
-Route::post('/films/add', [FilmController::class, 'create']);
+//---------------------------------------------------------------------------------//
 
-Route::get('/films/{film}/edit', [FilmController::class, 'edit'])
-    ->name('films.edit');
-
-Route::post('/films/{film}/update', [FilmController::class, 'update'])
-    ->name('films.update');
-
-Route::delete('/films/{film}', [FilmController::class, 'destroy'])
-    ->name('films.delete');
 
 
 

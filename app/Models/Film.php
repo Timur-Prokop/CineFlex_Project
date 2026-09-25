@@ -14,6 +14,8 @@ class Film extends Model
 {
     protected $table = 'films';
 
+    public $timestamps = false;
+
     protected $fillable = [
         'title',
         'duration',

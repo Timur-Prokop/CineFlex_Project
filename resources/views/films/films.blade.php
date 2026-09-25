@@ -64,19 +64,21 @@
                                 @endif
 
                                 <div class="film-card__overlay">
-                                    <div class="film-card__play">
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="22"
-                                            height="22"
-                                            viewBox="0 0 24 24"
-                                            fill="currentColor"
-                                        >
-                                            <path d="M4 5a2 2 0 0 0-2 2v2.5a2.5 2.5 0 0 1 0 5V17a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2.5a2.5 2.5 0 0 1 0-5V7a2 2 0 0 0-2-2H4zm9 2v2h-2V7h2zm0 4v2h-2v-2h2zm0 4v2h-2v-2h2z"></path>
-                                        </svg>
-                                    </div>
+                                    @can('can-access-client-area')
+                                        <div class="film-card__play">
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="22"
+                                                height="22"
+                                                viewBox="0 0 24 24"
+                                                fill="currentColor"
+                                            >
+                                                <path d="M4 5a2 2 0 0 0-2 2v2.5a2.5 2.5 0 0 1 0 5V17a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2.5a2.5 2.5 0 0 1 0-5V7a2 2 0 0 0-2-2H4zm9 2v2h-2V7h2zm0 4v2h-2v-2h2zm0 4v2h-2v-2h2z"></path>
+                                            </svg>
+                                        </div>
 
-                                    <span>Reserveren</span>
+                                        <span>Reserveren</span>
+                                    @endcan
                                 </div>
 
                                 <div class="film-card__duration">
