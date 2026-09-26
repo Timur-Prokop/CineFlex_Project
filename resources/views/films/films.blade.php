@@ -3,25 +3,6 @@
 @section('content')
 @vite(['/resources/css/films.css', '/resources/js/films.js'])
     <main class="films-page">
-        <section class="films-hero">
-            <div class="page-container">
-                <div class="films-hero__content">
-                    <span class="section-label">CINEFLEX FILMS</span>
-
-                    <h1>
-                        Ontdek jouw volgende
-                        <span>favoriete film</span>
-                    </h1>
-
-                    <p>
-                        Bekijk alle films die momenteel bij CINEFLEX beschikbaar zijn.
-                        Van actie en avontuur tot drama en familie.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-
         <section class="films-section">
             <div class="page-container">
                 <div class="films-section__header">
@@ -83,19 +64,21 @@
                                 @endif
 
                                 <div class="film-card__overlay">
-                                    <div class="film-card__play">
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="22"
-                                            height="22"
-                                            viewBox="0 0 24 24"
-                                            fill="currentColor"
-                                        >
-                                            <path d="M4 5a2 2 0 0 0-2 2v2.5a2.5 2.5 0 0 1 0 5V17a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2.5a2.5 2.5 0 0 1 0-5V7a2 2 0 0 0-2-2H4zm9 2v2h-2V7h2zm0 4v2h-2v-2h2zm0 4v2h-2v-2h2z"></path>
-                                        </svg>
-                                    </div>
+                                    @can('can-access-client-area')
+                                        <div class="film-card__play">
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="22"
+                                                height="22"
+                                                viewBox="0 0 24 24"
+                                                fill="currentColor"
+                                            >
+                                                <path d="M4 5a2 2 0 0 0-2 2v2.5a2.5 2.5 0 0 1 0 5V17a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2.5a2.5 2.5 0 0 1 0-5V7a2 2 0 0 0-2-2H4zm9 2v2h-2V7h2zm0 4v2h-2v-2h2zm0 4v2h-2v-2h2z"></path>
+                                            </svg>
+                                        </div>
 
-                                    <span>Reserveren</span>
+                                        <span>Reserveren</span>
+                                    @endcan
                                 </div>
 
                                 <div class="film-card__duration">
@@ -111,29 +94,6 @@
                                     <img class="group_age_pic" src=" {{ $film->age_group_pic }}" alt="" title="{{ $film->age_group }} jaar">
 
                                 </div>
-                                @can('can-see-workers')
-                                    <button
-                                        class="film-edit-button"
-                                        data-url = "{{ route('films.edit', $film->id) }}">
-                                        Wijzigen
-                                    </button>
-
-                                    <form
-                                        action="{{ route('films.delete', $film->id) }}"
-                                        method="POST"
-                                        class="film-delete-form"
-                                    >
-                                        @csrf
-                                        @method('DELETE')
-
-                                        <button
-                                            type="submit"
-                                            class="film-delete-button"
-                                        >
-                                            Verwijderen
-                                        </button>
-                                    </form>
-                                @endcan
 
                             </div>
                         </article>

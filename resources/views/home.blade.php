@@ -266,7 +266,7 @@
                                 <div class="home-film-overlay">
 
                                     <a
-                                        href="#"
+                                        href="{{route('show.film', $film->title)}}"
                                         class="home-film-button"
                                     >
                                         Bekijk film

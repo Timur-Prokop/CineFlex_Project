@@ -665,3 +665,7 @@
     }
 
 }
+
+.film-delete-button:hover, .film-edit-button:hover {
+    text-decoration: underline;
+}

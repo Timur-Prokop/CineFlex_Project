@@ -33,7 +33,7 @@
 
                     <input
                         type="email"
-                        id="email"
+                        id="login-email"
                         name="email"
                         value="{{ old('email') }}"
                         class="form-input"
@@ -94,12 +94,12 @@
             <div class="login-links">
                 <p>
                     Geen profiel?
-                    <a href="{{ route('register') }}">
+                    <a href="{{ route('register') }}" id="register-link">
                         Maak een nieuwe account
                     </a>
                 </p>
 
-                <a href="{{ route('reset.password') }}">
+                <a href="{{ route('password.reset') }}">
                     Wachtwoord vergeten?
                 </a>
             </div>

@@ -8,9 +8,6 @@ use Illuminate\Http\RedirectResponse;
 
 class FilmController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $films = DB::table('films')
@@ -44,7 +41,7 @@ class FilmController extends Controller
 
     public function create(Request $request): RedirectResponse
     {
-//        $this->authorize('create', Film::class);
+        $this->authorize('create', Film::class);
 
         $validated = $request->validate(
             [
@@ -89,8 +86,13 @@ class FilmController extends Controller
 
 
     public function new(){
+
+        $this->authorize('create', Film::class);
+
         $warnings = DB::table('warnings')->get();
-        $age_groups = DB::table('age_groups')->get();
+        $age_groups = DB::table('age_groups')
+            ->orderBy('id', 'asc')
+            ->get();
 
         return view('films.add_film', [
             'warnings' => $warnings,
@@ -125,7 +127,9 @@ class FilmController extends Controller
     {
         $this->authorize('update', $film);
 
-        $age_groups = DB::table('age_groups')->get();
+        $age_groups = DB::table('age_groups')
+            ->orderBy('id', 'desc')
+            ->get();
 
         $warnings = DB::table('warnings')->get();
 
