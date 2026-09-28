@@ -8,6 +8,28 @@
 
         <div class="schedule-container">
 
+            @if(session('success'))
+                <div class="planning-alert planning-alert--success">
+                    <span class="planning-alert__icon">✓</span>
+
+                    <div>
+                        <strong>Gelukt</strong>
+                        <p>{{ session('success') }}</p>
+                    </div>
+                </div>
+            @endif
+
+            @if(session('error'))
+                <div class="planning-alert planning-alert--error">
+                    <span class="planning-alert__icon">!</span>
+
+                    <div>
+                        <strong>Actie niet uitgevoerd</strong>
+                        <p>{{ session('error') }}</p>
+                    </div>
+                </div>
+            @endif
+
             <section class="schedule-header">
 
                 <div class="planning-actions">
@@ -592,11 +614,31 @@
                                         <button
                                             type="button"
                                             class="schedule-reserve-button"
-                                            data-url="{{ route('show.film', $film->id) }}"
+                                            data-url="{{ route('show.film', $film->title) }}"
                                         >
                                             Film bekijken
                                             <span>→</span>
                                         </button>
+
+                                        @can('can-access-worker-area')
+                                            <form
+                                                action="{{ route('planning.destroy', $film->id) }}"
+                                                method="POST"
+                                                class="screening-delete-form"
+                                                onsubmit="return confirm('Weet je zeker dat je deze voorstelling wilt verwijderen?');"
+                                            >
+                                                @csrf
+                                                @method('DELETE')
+
+                                                <button
+                                                    type="submit"
+                                                    class="screening-delete-button"
+                                                >
+                                                    <span aria-hidden="true">×</span>
+                                                    Verwijder voorstelling
+                                                </button>
+                                            </form>
+                                        @endcan
 
                                     </div>
 

@@ -57,8 +57,6 @@ Route::middleware(['guest'])->group(function () {
     Route::post('/password/reset', [ResetPasswordController::class, 'store'])
         ->name('password.reset');
 
-    Route::get('password/reset/note', [ResetPasswordController::class, 'resetNote']);
-
 });
 
 //----------------------------------------------------------//
@@ -171,11 +169,20 @@ Route::get('/films/{film:title}', [FilmController::class, 'show'])
 
 
 
+//---------------------------------------PLANNINGSSSSSSSSSSS------------------------//
 
-//PLANNINGSSSSSSSSSSS
+Route::middleware(['can:can-access-worker-area'])->group(function () {
 
-Route::get('/planning', [PlanningController::class, 'show'])
-    ->name('planning.show');
+    Route::get('/plannings', [PlanningController::class, 'index'])
+        ->name('planning.show');
 
-Route::post('/planning', [PlanningController::class, 'create'])
-    ->name('planning.create');
+    Route::post('/plannings', [PlanningController::class, 'create'])
+        ->name('planning.create');
+
+    Route::delete('/plannings/delete/{screening}', [PlanningController::class, 'destroy'])
+        ->name('planning.destroy');
+});
+
+//----------------------------------------------------------------------------------//
+
+
