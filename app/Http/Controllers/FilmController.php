@@ -115,6 +115,7 @@ class FilmController extends Controller
         ]);
 
         $screeningsByDate = $film->screenings
+            ->where("date_time", ">=", now())
             ->sortBy('date_time')
             ->groupBy(function ($screening) {
                 return $screening->date_time->format('Y-m-d');

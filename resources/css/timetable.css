@@ -411,6 +411,7 @@
 
 .schedule-reserve-button {
     height: 47px;
+    width: 100%;
 
     display: flex;
     align-items: center;
@@ -1083,4 +1084,50 @@
         justify-content: center;
     }
 
+}
+
+
+
+.screening-delete-form {
+    margin-top: 12px;
+    width: 100%;
+}
+
+.screening-delete-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    width: 100%;
+    height: 47px;
+    padding: 0 19px;
+    box-sizing: border-box;
+
+    background: rgba(255, 77, 109, 0.08);
+    border: 1px solid rgba(255, 77, 109, 0.35);
+    border-radius: 10px;
+
+    color: #ff4d6d;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: inherit;
+    line-height: 1.2;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.screening-delete-button span {
+    font-size: 1.2rem;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.screening-delete-button:hover {
+    background: rgba(255, 77, 109, 0.16);
+    border-color: #ff4d6d;
+    box-shadow: 0 0 14px rgba(255, 77, 109, 0.15);
+    transform: translateY(-1px);
 }

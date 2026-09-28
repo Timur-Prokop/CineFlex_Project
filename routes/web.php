@@ -4,7 +4,7 @@ use App\Http\Controllers\FilmController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\PasswordController;
+use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmployeeController;
@@ -51,8 +51,11 @@ Route::middleware(['guest'])->group(function () {
 
     Route::post('/register', [RegisterController::class, 'store']);
 
-    Route::get('/password/reset', [PasswordController::class, 'show'])
-    ->name('password.reset');
+    Route::get('/password/reset', [ResetPasswordController::class, 'create'])
+        ->name('password.reset');
+
+    Route::post('/password/reset', [ResetPasswordController::class, 'store'])
+        ->name('password.reset');
 
 });
 
@@ -166,11 +169,20 @@ Route::get('/films/{film:title}', [FilmController::class, 'show'])
 
 
 
+//---------------------------------------PLANNINGSSSSSSSSSSS------------------------//
 
-//PLANNINGSSSSSSSSSSS
+Route::middleware(['can:can-access-worker-area'])->group(function () {
 
-Route::get('/planning', [PlanningController::class, 'show'])
-    ->name('planning.show');
+    Route::get('/plannings', [PlanningController::class, 'index'])
+        ->name('planning.show');
 
-Route::post('/planning', [PlanningController::class, 'create'])
-    ->name('planning.create');
+    Route::post('/plannings', [PlanningController::class, 'create'])
+        ->name('planning.create');
+
+    Route::delete('/plannings/delete/{screening}', [PlanningController::class, 'destroy'])
+        ->name('planning.destroy');
+});
+
+//----------------------------------------------------------------------------------//
+
+

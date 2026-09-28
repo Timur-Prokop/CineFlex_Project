@@ -103,7 +103,7 @@
 
                     <input
                         type="email"
-                        id="email"
+                        id="register-email"
                         name="email"
                         value="{{ old('email', request('email')) }}"
                         class="form-input"
@@ -179,7 +179,7 @@
             <div class="register-links">
                 <p>
                     Heb je al een account?
-                    <a href="{{ route('login') }}">
+                    <a href="{{ route('login') }}" id="login-link">
                         Log in
                     </a>
                 </p>

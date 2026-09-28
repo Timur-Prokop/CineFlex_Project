@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use App\Models\Film;
+use App\Models\Screening;
+use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Carbon\Carbon;
 
 class PlanningController extends Controller
 {
-    public function show()
+    public function index()
     {
         $films = DB::table('screenings')
             ->join(
@@ -195,5 +197,29 @@ class PlanningController extends Controller
                 'success',
                 'De voorstelling is succesvol toegevoegd.'
             );
+    }
+
+    public function destroy(Screening $screening)
+    {
+        $this->authorize('destroy', $screening);
+
+        $exists = Ticket::where(
+            'fk_id_screening',
+            $screening->id
+        )->exists();
+
+        if ($exists) {
+            return redirect()->back()->with(
+                'error',
+                'Er zijn tickets verkocht voor deze voorstelling. Het is niet mogelijk om de voorstelling uit de agenda te verwijderen.'
+            );
+        }
+
+        $screening->delete();
+
+        return redirect()->back()->with(
+            'success',
+            'De voorstelling is verwijderd.'
+        );
     }
 }
