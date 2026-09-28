@@ -27,7 +27,7 @@ class EmployeeController extends Controller
 
         $roles = DB::table('roles')->get();
 
-        return view('admin.employees.index', compact('employees', 'roles'));
+        return view('employees', compact('employees', 'roles'));
     }
 
     public function store(Request $request)
