@@ -36,13 +36,13 @@ class EmployeeController extends Controller
         $this->authorize('store', User::class);
 
         $request->validate([
-        'first_name' => 'required|string|max:255',
-        'prefix' => 'nullable|string|max:50',
-        'surname' => 'required|string|max:255',
-        'date_of_birth' => 'required|date',
-        'email' => 'required|email|unique:users,email',
-        'password' => 'required|min:8',
-        'fk_role' => 'required|integer|exists:roles,id',
+            'first_name' => 'required|string|max:255',
+            'prefix' => 'nullable|string|max:50',
+            'surname' => 'required|string|max:255',
+            'date_of_birth' => 'required|date',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:8|confirmed', // <-- Added |confirmed
+            'fk_role' => 'required|integer|exists:role,id',
         ]);
 
         DB::table('users')->insert([
@@ -69,12 +69,13 @@ class EmployeeController extends Controller
         $this->authorize('update', $employee);
 
         $request->validate([
-        'first_name' => 'required|string|max:255',
-        'prefix' => 'nullable|string|max:50',
-        'surname' => 'required|string|max:255',
-        'date_of_birth' => 'required|date',
-        'email' => 'required|email|unique:users,email,'.$id,
-        'fk_role' => 'required|integer|exists:role,id',
+            'first_name' => 'required|string|max:255',
+            'prefix' => 'nullable|string|max:50',
+            'surname' => 'required|string|max:255',
+            'date_of_birth' => 'required|date',
+            'email' => 'required|email|unique:users,email,'.$id,
+            'password' => 'nullable|min:8|confirmed', // <-- Added this line
+            'fk_role' => 'required|integer|exists:role,id',
         ]);
 
         $data = [
