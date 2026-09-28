@@ -9,6 +9,7 @@ use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PlanningController;
 
 
 //-------------------------HOMeeee--------------------------//
@@ -175,3 +176,6 @@ Route::get('/films/{film:title}', [FilmController::class, 'show'])
 
 Route::get('/planning', [PlanningController::class, 'show'])
     ->name('planning.show');
+
+Route::post('/planning', [PlanningController::class, 'create'])
+    ->name('planning.create');
