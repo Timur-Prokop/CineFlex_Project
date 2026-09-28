@@ -4,7 +4,7 @@ use App\Http\Controllers\FilmController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\PasswordController;
+use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmployeeController;
@@ -50,8 +50,13 @@ Route::middleware(['guest'])->group(function () {
 
     Route::post('/register', [RegisterController::class, 'store']);
 
-    Route::get('/password/reset', [PasswordController::class, 'show'])
-    ->name('password.reset');
+    Route::get('/password/reset', [ResetPasswordController::class, 'create'])
+        ->name('password.reset');
+
+    Route::post('/password/reset', [ResetPasswordController::class, 'store'])
+        ->name('password.reset');
+
+    Route::get('password/reset/note', [ResetPasswordController::class, 'resetNote']);
 
 });
 

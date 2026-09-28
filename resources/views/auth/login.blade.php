@@ -35,7 +35,7 @@
                         type="email"
                         id="login-email"
                         name="email"
-                        value="{{ old('email') }}"
+                        value="{{ old('email', request('email')) }}"
                         class="form-input"
                         autocomplete="email"
                         required
@@ -99,7 +99,7 @@
                     </a>
                 </p>
 
-                <a href="{{ route('password.reset') }}">
+                <a href="{{ route('password.reset') }}" id="reset-password-link">
                     Wachtwoord vergeten?
                 </a>
             </div>

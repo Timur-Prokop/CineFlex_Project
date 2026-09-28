@@ -2,7 +2,7 @@
 
 @section('content')
 
-    @vite(['resources/css/reset-password.css'])
+    @vite(['resources/css/reset-password.css', 'resources/js/reset-password.js'])
 
     <div class="reset-container">
         <div class="reset-card">
@@ -30,8 +30,7 @@
                 </div>
             @endif
 
-            <form action="" method="POST">
-{{--                {{ route('password.email') }}--}}
+            <form action="{{route('password.reset')}}" method="POST">
                 @csrf
 
                 <div class="form-field">
@@ -41,9 +40,9 @@
 
                     <input
                         type="email"
-                        id="email"
+                        id="password-reset-email"
                         name="email"
-                        value="{{ old('email') }}"
+                        value="{{ old('email', request('email')) }}"
                         class="form-input"
                         autocomplete="email"
                         placeholder="jouw@email.nl"
@@ -63,13 +62,13 @@
             <hr>
 
             <div class="reset-links">
-                <a href="{{ route('login') }}">
+                <a href="{{ route('login') }}" id="login-link">
                     ← Terug naar login
                 </a>
 
                 <p>
                     Nog geen account?
-                    <a href="{{ route('register') }}">
+                    <a href="{{ route('register') }}" id="register-link">
                         Maak een account
                     </a>
                 </p>
