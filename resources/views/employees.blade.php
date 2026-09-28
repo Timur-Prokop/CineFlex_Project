@@ -67,10 +67,14 @@
                                     <h3>{{ $employee->first_name }} {{ $employee->prefix }} {{ $employee->surname }}</h3>
                                 </div>
 
-                                <p style="margin-bottom: 5px;">
-                                    <strong>Email:</strong> {{ $employee->email }}<br>
-                                    <strong>Rol:</strong> {{ $employee->role_name }}
-                                </p>
+                                <div style="margin-bottom: 12px; color: #888d94; font-size: 13px; line-height: 1.55;">
+                                    <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="{{ $employee->email }}">
+                                        <strong style="color: #fff;">Email:</strong> {{ $employee->email }}
+                                    </div>
+                                    <div>
+                                        <strong style="color: #fff;">Rol:</strong> {{ $employee->role_name }}
+                                    </div>
+                                </div>
 
                                 <div class="admin-actions">
                                     <!-- Pass employee data into data-attributes for JS to read -->
