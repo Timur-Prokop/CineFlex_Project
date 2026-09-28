@@ -4,7 +4,7 @@ namespace App\Policies;
 
 use App\Models\User;
 
-class EmployeePolicy
+class UserPolicy
 {
     /**
      * Create a new policy instance.
@@ -39,13 +39,13 @@ class EmployeePolicy
         return $user->isManager();
     }
 
-    public function update(User $user, User $worker): bool
+    public function update(User $user): bool
     {
         return $user->isManager();
 
     }
 
-    public function destroy(User $user, User $worker): bool
+    public function destroy(User $user): bool
     {
         return $user->isManager();
     }

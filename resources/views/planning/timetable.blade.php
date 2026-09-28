@@ -33,16 +33,16 @@
             <section class="schedule-header">
 
                 <div class="planning-actions">
-
-                    <button
-                        type="button"
-                        id="openPlanningButton"
-                        class="new-planning-button"
-                    >
-                        <span>+</span>
-                        Nieuwe voorstelling
-                    </button>
-
+                    @can('can-access-worker-area')
+                        <button
+                            type="button"
+                            id="openPlanningButton"
+                            class="new-planning-button"
+                            >
+                            <span>+</span>
+                            Nieuwe voorstelling
+                        </button>
+                    @endcan
                 </div>
 
 
@@ -241,6 +241,7 @@
                                     id="screening-date"
                                     name="date"
                                     value="{{ old('date') }}"
+                                    min="{{now()}}"
                                     required
                                 >
 
@@ -682,10 +683,6 @@
 
     </main>
 
-
-    {{-- =====================================================
-        JAVASCRIPT
-    ====================================================== --}}
 
     <script>
 

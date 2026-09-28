@@ -49,10 +49,22 @@
                     <div>
                         <h2>Alle Medewerkers</h2>
                     </div>
-                    <button type="button" class="header__login" style="width: auto; cursor: pointer;" onclick="openModal('addModal')">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
-                        <span>Nieuwe Medewerker</span>
-                    </button>
+
+                    <div class="films-tools">
+                        <!-- New Search Bar -->
+                        <div class="film-search">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.3-4.3"></path>
+                            </svg>
+                            <input type="text" id="employeeSearch" placeholder="Zoek op naam, email of rol...">
+                        </div>
+
+                        <button type="button" class="header__login" style="width: auto; cursor: pointer;" onclick="openModal('addModal')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                            <span>Nieuwe Medewerker</span>
+                        </button>
+                    </div>
                 </div>
 
                 <div class="films-grid">
@@ -67,10 +79,14 @@
                                     <h3>{{ $employee->first_name }} {{ $employee->prefix }} {{ $employee->surname }}</h3>
                                 </div>
 
-                                <p style="margin-bottom: 5px;">
-                                    <strong>Email:</strong> {{ $employee->email }}<br>
-                                    <strong>Rol:</strong> {{ $employee->role_name }}
-                                </p>
+                                <div style="margin-bottom: 12px; color: #888d94; font-size: 13px; line-height: 1.55;">
+                                    <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="{{ $employee->email }}">
+                                        <strong style="color: #fff;">Email:</strong> {{ $employee->email }}
+                                    </div>
+                                    <div>
+                                        <strong style="color: #fff;">Rol:</strong> {{ $employee->role_name }}
+                                    </div>
+                                </div>
 
                                 <div class="admin-actions">
                                     <!-- Pass employee data into data-attributes for JS to read -->
@@ -140,9 +156,32 @@
                     <label>EMAILADRES</label>
                     <input type="email" name="email" class="form-control" required>
                 </div>
-                <div class="form-group">
-                    <label>WACHTWOORD</label>
-                    <input type="password" name="password" class="form-control" required minlength="8">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>WACHTWOORD</label>
+                        <div style="position: relative;">
+                            <!-- Added style="padding-right: 60px;" so text doesn't go behind the button -->
+                            <input type="password" name="password" class="form-control" required minlength="8" style="padding-right: 60px;">
+
+                            <!-- The Show Button -->
+                            <button type="button" class="toggle-password-btn" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #a9adb4; font-size: 13px; font-weight: bold; cursor: pointer;">
+                                Show
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>WACHTWOORD BEVESTIGEN</label>
+                        <!-- The name MUST be password_confirmation for Laravel to recognize it -->
+                        <div style="position: relative;">
+                            <!-- Added style="padding-right: 60px;" so text doesn't go behind the button -->
+                            <input type="password" name="password-confirmation" class="form-control" required minlength="8" style="padding-right: 60px;">
+
+                            <!-- The Show Button -->
+                            <button type="button" class="toggle-password-btn" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #a9adb4; font-size: 13px; font-weight: bold; cursor: pointer;">
+                                Show
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 <button type="submit" class="submit-btn">Opslaan</button>
             </form>
@@ -191,9 +230,31 @@
                     <label>EMAILADRES</label>
                     <input type="email" name="email" id="edit_email" class="form-control" required>
                 </div>
-                <div class="form-group">
-                    <label>NIEUW WACHTWOORD (Optioneel)</label>
-                    <input type="password" name="password" class="form-control" minlength="8" placeholder="Laat leeg om te behouden">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>NIEUW WACHTWOORD (Optioneel)</label>
+                        <div style="position: relative;">
+                            <!-- Added style="padding-right: 60px;" so text doesn't go behind the button -->
+                            <input type="password" name="password" class="form-control" required minlength="8" style="padding-right: 60px;">
+
+                            <!-- The Show Button -->
+                            <button type="button" class="toggle-password-btn" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #a9adb4; font-size: 13px; font-weight: bold; cursor: pointer;">
+                                Show
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>WACHTWOORD BEVESTIGEN</label>
+                        <div style="position: relative;">
+                            <!-- Added style="padding-right: 60px;" so text doesn't go behind the button -->
+                            <input type="password" name="password-confirmation" class="form-control" required minlength="8" style="padding-right: 60px;">
+
+                            <!-- The Show Button -->
+                            <button type="button" class="toggle-password-btn" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #a9adb4; font-size: 13px; font-weight: bold; cursor: pointer;">
+                                Show
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 <button type="submit" class="submit-btn">Wijzigingen Opslaan</button>
             </form>
@@ -236,6 +297,49 @@
                 document.body.style.overflow = '';
             }
         }
+
+        // Employee Search Filter
+        const searchInput = document.getElementById('employeeSearch');
+        const employeeCards = document.querySelectorAll('.film-card');
+
+        searchInput.addEventListener('input', function () {
+            const searchValue = this.value.toLowerCase();
+
+            employeeCards.forEach(card => {
+                // .textContent grabs ALL text inside the card (Name, Email, and Role)
+                const cardText = card.textContent.toLowerCase();
+
+                // If the card's text includes the search value, show it. Otherwise, hide it.
+                if (cardText.includes(searchValue)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        // Password "Hold to Show" functionality for all password fields
+        const togglePasswordBtns = document.querySelectorAll('.toggle-password-btn');
+
+        togglePasswordBtns.forEach(btn => {
+            // Find the input field that is inside the same relative div
+            const passwordInput = btn.previousElementSibling;
+
+            // When pressing the mouse button DOWN -> Show password
+            btn.addEventListener('mousedown', function () {
+                passwordInput.type = 'text';
+            });
+
+            // When releasing the mouse button UP -> Hide password
+            btn.addEventListener('mouseup', function () {
+                passwordInput.type = 'password';
+            });
+
+            // Security catch: If they drag their mouse away while holding, hide it
+            btn.addEventListener('mouseleave', function () {
+                passwordInput.type = 'password';
+            });
+        });
     </script>
 @endsection
 @endcan

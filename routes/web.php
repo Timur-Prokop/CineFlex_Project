@@ -123,7 +123,7 @@ Route::get('/medewerkers', [EmployeeController::class, 'index'])
     ->name('medewerkers.index');
 
 // only for manager
-Route::middleware(['auth', 'verified', 'can:access-manager-area'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::post('/medewerkers', [EmployeeController::class, 'store'])
         ->name('medewerkers.store');
