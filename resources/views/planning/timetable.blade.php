@@ -612,14 +612,13 @@
 
                                     <div class="schedule-film__action">
 
-                                        <button
-                                            type="button"
+                                        <a
+                                            href="{{ route('show.film', $film->title) }}"
                                             class="schedule-reserve-button"
-                                            data-url="{{ route('show.film', $film->title) }}"
                                         >
                                             Film bekijken
                                             <span>→</span>
-                                        </button>
+                                        </a>
 
                                         @can('can-access-worker-area')
                                             <form
