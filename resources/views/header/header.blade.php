@@ -17,9 +17,9 @@
                 Films
             </a>
 
-            <a href="{{ route('catalog') }}"
-               class="header__link {{ request()->routeIs('catalog') ? 'active' : '' }}">
-                Catalog
+            <a href="{{ route('planning.show') }}"
+               class="header__link {{ request()->routeIs('planning.show') ? 'active' : '' }}">
+                Rooster
             </a>
 
             @can('can-see-workers')
