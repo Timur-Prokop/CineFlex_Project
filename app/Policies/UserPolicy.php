@@ -16,7 +16,7 @@ class UserPolicy
 
     public function viewAny(User $user): bool
     {
-        return $user->isManager() || $user->isWorker();
+        return $user->isManager();
     }
 
     public function view(User $user): bool

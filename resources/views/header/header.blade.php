@@ -22,7 +22,7 @@
                 Rooster
             </a>
 
-            @can('can-see-workers')
+            @can('can-access-manager-area')
             <a href="{{ route('medewerkers.index') }}"
                class="header__link {{ request()->routeIs('medewerkers') ? 'active' : '' }}">
                 Medewerkers

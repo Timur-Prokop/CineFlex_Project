@@ -101,16 +101,12 @@ class EmployeeController extends Controller
 
     public function destroy($id)
     {
+        $worker = User::findOrFail($id);
+        $this->authorize('destroy', $worker);
 
-        $this->authorize('destroy', User::class);
+        // Hard Delete: entirely removes the entry from the users table
+        DB::table('users')->where('id', $id)->delete();
 
-        // Soft Delete: update the deleted_at column instead of deleting the row
-        DB::table('users')->where('id', $id)->update([
-        'deleted_at' => now(),
-        'updated_at' => now()
-        ]);
-
-        return redirect()->route('medewerkers.index')
-            ->with('success', 'Medewerker verwijderd!');
+        return redirect()->route('medewerkers.index')->with('success', 'Medewerker permanent verwijderd!');
     }
 }

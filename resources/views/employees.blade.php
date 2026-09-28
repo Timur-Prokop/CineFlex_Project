@@ -5,13 +5,32 @@
     @vite('/resources/css/films.css')
     <style>
         /* Card Layout Tweaks */
-        .admin-actions { display: flex; gap: 10px; margin-top: 15px; }
+        .film-card {
+            display: flex;
+            flex-direction: column;
+            height: 100%; /* Or set a fixed height like 400px depending on your grid */
+        }
+
+        /* 2. Tell the content area to take up all remaining vertical space */
+        .film-card__content {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        /* 3. Your tweaked CSS: margin-top: auto pushes this to the very bottom */
+        .admin-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: auto; /* This is the magic rule */
+            padding-top: 15px;
+        }
+
         .btn-edit { background: none; color: #3aff7c; cursor: pointer; font-size: 13px; font-weight: 600; padding: 6px 12px; border: 1px solid rgba(58, 255, 124, 0.3); border-radius: 8px; transition: 0.2s; }
         .btn-edit:hover { background: rgba(58, 255, 124, 0.1); }
         .btn-delete { background: none; color: #ff3a5e; cursor: pointer; font-size: 13px; font-weight: 600; padding: 6px 12px; border: 1px solid rgba(255, 58, 94, 0.3); border-radius: 8px; transition: 0.2s; }
         .btn-delete:hover { background: rgba(255, 58, 94, 0.1); }
         .employee-avatar { width: 100%; aspect-ratio: 1; background: #101214; border-radius: 16px; display: grid; place-items: center; font-size: 48px; color: #3aff7c; border: 1px solid #292d32; }
-
         /* Modal Styles */
         .modal-overlay { position: fixed; inset: 0; z-index: 999; background: rgba(4, 5, 6, 0.85); backdrop-filter: blur(8px); display: none; place-items: center; padding: 20px; opacity: 0; transition: opacity 0.3s ease; }
         .modal-overlay.active { display: grid; opacity: 1; }
@@ -161,7 +180,7 @@
                         <label>WACHTWOORD</label>
                         <div style="position: relative;">
                             <!-- Added style="padding-right: 60px;" so text doesn't go behind the button -->
-                            <input type="password" name="password" class="form-control" required minlength="8" style="padding-right: 60px;">
+                            <input type="password" name="password" class="form-control"minlength="8" style="padding-right: 60px;">
 
                             <!-- The Show Button -->
                             <button type="button" class="toggle-password-btn" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #a9adb4; font-size: 13px; font-weight: bold; cursor: pointer;">
@@ -174,7 +193,7 @@
                         <!-- The name MUST be password_confirmation for Laravel to recognize it -->
                         <div style="position: relative;">
                             <!-- Added style="padding-right: 60px;" so text doesn't go behind the button -->
-                            <input type="password" name="password-confirmation" class="form-control" required minlength="8" style="padding-right: 60px;">
+                            <input type="password" name="password-confirmation" class="form-control" minlength="8" style="padding-right: 60px;">
 
                             <!-- The Show Button -->
                             <button type="button" class="toggle-password-btn" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #a9adb4; font-size: 13px; font-weight: bold; cursor: pointer;">
@@ -235,7 +254,7 @@
                         <label>NIEUW WACHTWOORD (Optioneel)</label>
                         <div style="position: relative;">
                             <!-- Added style="padding-right: 60px;" so text doesn't go behind the button -->
-                            <input type="password" name="password" class="form-control" required minlength="8" style="padding-right: 60px;">
+                            <input type="password" name="password" class="form-control" minlength="8" style="padding-right: 60px;">
 
                             <!-- The Show Button -->
                             <button type="button" class="toggle-password-btn" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #a9adb4; font-size: 13px; font-weight: bold; cursor: pointer;">
@@ -247,7 +266,7 @@
                         <label>WACHTWOORD BEVESTIGEN</label>
                         <div style="position: relative;">
                             <!-- Added style="padding-right: 60px;" so text doesn't go behind the button -->
-                            <input type="password" name="password-confirmation" class="form-control" required minlength="8" style="padding-right: 60px;">
+                            <input type="password" name="password-confirmation" class="form-control" minlength="8" style="padding-right: 60px;">
 
                             <!-- The Show Button -->
                             <button type="button" class="toggle-password-btn" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #a9adb4; font-size: 13px; font-weight: bold; cursor: pointer;">
