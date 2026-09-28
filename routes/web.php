@@ -171,10 +171,10 @@ Route::get('/films/{film:title}', [FilmController::class, 'show'])
 
 //---------------------------------------PLANNINGSSSSSSSSSSS------------------------//
 
-Route::middleware(['can:can-access-worker-area'])->group(function () {
+Route::get('/plannings', [PlanningController::class, 'index'])
+    ->name('planning.show');
 
-    Route::get('/plannings', [PlanningController::class, 'index'])
-        ->name('planning.show');
+Route::middleware(['can:can-access-worker-area'])->group(function () {
 
     Route::post('/plannings', [PlanningController::class, 'create'])
         ->name('planning.create');
