@@ -2,17 +2,23 @@
 
 @section('content')
 
-    @vite(['resources/css/reset-password.css', 'resources/js/reset-password.js'])
+    @vite([
+        'resources/css/reset-password.css',
+        'resources/js/reset-password.js'
+    ])
 
     <div class="reset-container">
         <div class="reset-card">
 
-            <h1>Wachtwoord vergeten?</h1>
+            <div class="reset-header">
+                <span class="reset-eyebrow">CINEFLEX</span>
 
-            <p class="reset-subtitle">
-                Geen probleem. Vul je emailadres in en we sturen je een
-                link waarmee je je wachtwoord opnieuw kunt instellen.
-            </p>
+                <h1>Nieuw wachtwoord</h1>
+
+                <p class="reset-subtitle">
+                    Kies een nieuw wachtwoord voor je account.
+                </p>
+            </div>
 
             @if ($errors->any())
                 <div class="form-errors">
@@ -24,54 +30,113 @@
                 </div>
             @endif
 
-            @if (session('status'))
-                <div class="form-success">
-                    {{ session('status') }}
-                </div>
-            @endif
-
-            <form action="{{route('password.reset')}}" method="POST">
+            <form
+                method="POST"
+                action="{{ route('password.update') }}"
+                class="reset-form"
+            >
                 @csrf
 
+                <input
+                    type="hidden"
+                    name="token"
+                    value="{{ $token }}"
+                >
+
                 <div class="form-field">
-                    <label for="email" class="form-label">
-                        Email
+                    <label
+                        for="email"
+                        class="form-label"
+                    >
+                        E-mailadres
                     </label>
 
                     <input
                         type="email"
-                        id="password-reset-email"
+                        id="email"
                         name="email"
-                        value="{{ old('email', request('email')) }}"
+                        value="{{ old('email', request()->email) }}"
                         class="form-input"
-                        autocomplete="email"
                         placeholder="jouw@email.nl"
+                        autocomplete="email"
                         required
-                        autofocus
                     >
+                </div>
+
+                <div class="form-field">
+                    <label
+                        for="password"
+                        class="form-label"
+                    >
+                        Nieuw wachtwoord
+                    </label>
+
+                    <div class="password-wrapper">
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            class="form-input"
+                            placeholder="Voer je nieuwe wachtwoord in"
+                            autocomplete="new-password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            id="toggle-password"
+                            class="password-toggle"
+                            aria-label="Show password"
+                        >
+                            Show
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label
+                        for="password_confirmation"
+                        class="form-label"
+                    >
+                        Bevestig wachtwoord
+                    </label>
+
+                    <div class="password-wrapper">
+                        <input
+                            type="password"
+                            id="password_confirmation"
+                            name="password_confirmation"
+                            class="form-input"
+                            placeholder="Herhaal je nieuwe wachtwoord"
+                            autocomplete="new-password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            id="toggle-password-confirmation"
+                            class="password-toggle"
+                            aria-label="Show password"
+                        >
+                            Show
+                        </button>
+                    </div>
                 </div>
 
                 <button
                     type="submit"
                     class="reset-button"
                 >
-                    Stuur reset link
+                    Wachtwoord wijzigen
                 </button>
             </form>
 
             <hr>
 
             <div class="reset-links">
-                <a href="{{ route('login') }}" id="login-link">
+                <a href="{{ route('login') }}">
                     ← Terug naar login
                 </a>
-
-                <p>
-                    Nog geen account?
-                    <a href="{{ route('register') }}" id="register-link">
-                        Maak een account
-                    </a>
-                </p>
             </div>
 
         </div>

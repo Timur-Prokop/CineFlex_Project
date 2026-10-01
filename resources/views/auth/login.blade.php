@@ -23,6 +23,12 @@
                 </div>
             @endif
 
+            @if (session('status'))
+                <div class="form-success">
+                    {{ session('status') }}
+                </div>
+            @endif
+
             <form action="" method="POST">
                 @csrf
 
@@ -99,7 +105,7 @@
                     </a>
                 </p>
 
-                <a href="{{ route('password.reset') }}" id="reset-password-link">
+                <a href="{{ route('password.forgot') }}" id="reset-password-link">
                     Wachtwoord vergeten?
                 </a>
             </div>

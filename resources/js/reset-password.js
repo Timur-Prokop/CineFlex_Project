@@ -1,23 +1,63 @@
-document.getElementById('login-link').addEventListener('click', function () {
-    const email = document.getElementById('password-reset-email').value;
+const passwordInput = document.getElementById('password');
+const togglePassword = document.getElementById('toggle-password');
 
-    const url = new URL(this.href);
+const passwordConfirmationInput = document.getElementById('password_confirmation');
+const togglePasswordConfirmation = document.getElementById('toggle-password-confirmation');
 
-    if (email.trim() !== '') {
-        url.searchParams.set('email', email);
-    }
 
-    this.href = url.toString();
-});
+if (passwordInput && togglePassword) {
+    togglePassword.addEventListener('mousedown', () => {
+        const isPassword = passwordInput.type === 'password';
 
-document.getElementById('register-link').addEventListener('click', function () {
-    const email = document.getElementById('password-reset-email').value;
+        passwordInput.type = isPassword ? 'text' : 'password';
 
-    const url = new URL(this.href);
+        togglePassword.textContent = isPassword ? 'Hide' : 'Show';
 
-    if (email.trim() !== '') {
-        url.searchParams.set('email', email);
-    }
+        togglePassword.setAttribute(
+            'aria-label',
+            isPassword ? 'Hide password' : 'Show password'
+        );
+    });
 
-    this.href = url.toString();
-});
+    togglePassword.addEventListener('mouseup', () => {
+        const isPassword = passwordInput.type === 'password';
+
+        passwordInput.type = isPassword ? 'text' : 'password';
+
+        togglePassword.textContent = isPassword ? 'Hide' : 'Show';
+
+        togglePassword.setAttribute(
+            'aria-label',
+            isPassword ? 'Hide password' : 'Show password'
+        );
+    });
+}
+
+
+if (passwordConfirmationInput && togglePasswordConfirmation) {
+    togglePasswordConfirmation.addEventListener('mouseup', () => {
+        const isPassword = passwordConfirmationInput.type === 'password';
+
+        passwordConfirmationInput.type = isPassword ? 'text' : 'password';
+
+        togglePasswordConfirmation.textContent = isPassword ? 'Hide' : 'Show';
+
+        togglePasswordConfirmation.setAttribute(
+            'aria-label',
+            isPassword ? 'Hide password' : 'Show password'
+        );
+    });
+
+    togglePasswordConfirmation.addEventListener('mousedown', () => {
+        const isPassword = passwordConfirmationInput.type === 'password';
+
+        passwordConfirmationInput.type = isPassword ? 'text' : 'password';
+
+        togglePasswordConfirmation.textContent = isPassword ? 'Hide' : 'Show';
+
+        togglePasswordConfirmation.setAttribute(
+            'aria-label',
+            isPassword ? 'Hide password' : 'Show password'
+        );
+    });
+}

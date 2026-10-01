@@ -6,10 +6,12 @@ use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\RegisterController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PlanningController;
+
 
 
 //-------------------------HOMeeee--------------------------//
@@ -51,12 +53,22 @@ Route::middleware(['guest'])->group(function () {
 
     Route::post('/register', [RegisterController::class, 'store']);
 
-    Route::get('/password/reset', [ResetPasswordController::class, 'create'])
-        ->name('password.reset');
+    Route::get('/forgot-password', [ResetPasswordController::class, 'create'])
+        ->name('password.forgot');
 
-    Route::post('/password/reset', [ResetPasswordController::class, 'store'])
-        ->name('password.reset');
+    Route::post('/forgot-password', [ResetPasswordController::class, 'store'])
+        ->name('password.forgot');
 
+
+    Route::get('/password/reset', function (Request $request) {
+        return view('auth.reset-password', [
+            'token' => $request->token,
+            'email' => $request->email,
+        ]);
+    })->name('password.reset');
+
+    Route::post('/password/reset', [ResetPasswordController::class, 'update'])
+        ->name('password.update');
 });
 
 //----------------------------------------------------------//

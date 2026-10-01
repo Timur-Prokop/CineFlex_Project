@@ -347,6 +347,25 @@
     font-size: 0.9rem;
 }
 
+
+/* ========================================
+   Success
+   ======================================== */
+.form-success {
+    margin-bottom: 20px;
+
+    padding: 12px 15px;
+
+    border: 1px solid rgba(57, 255, 136, 0.3);
+    border-radius: 9px;
+
+    background: rgba(57, 255, 136, 0.08);
+
+    color: var(--green);
+
+    font-size: 0.9rem;
+}
+
 .form-errors ul {
     margin: 0;
     padding-left: 18px;
