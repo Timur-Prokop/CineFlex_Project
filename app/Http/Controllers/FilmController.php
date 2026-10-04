@@ -105,23 +105,75 @@ class FilmController extends Controller
         //
     }
 
-    public function show(Film $film)
+    public function show(Request $request, Film $film)
     {
         $film->load([
             'genres',
-            'warnings',
             'ageGroup',
+            'warnings',
             'screenings.auditory',
         ]);
 
+        // Будущие сеансы фильма
         $screeningsByDate = $film->screenings
-            ->where("date_time", ">=", now())
+            ->where('date_time', '>=', now())
             ->sortBy('date_time')
             ->groupBy(function ($screening) {
                 return $screening->date_time->format('Y-m-d');
             });
 
-        return view('films.film', compact('film', 'screeningsByDate'));
+
+        $screeningIds = $film->screenings
+            ->where('date_time', '>=', now())
+            ->pluck('id');
+
+
+        $auditoryIds = $film->screenings
+            ->where('date_time', '>=', now())
+            ->pluck('fk_auditory')
+            ->unique();
+
+
+        $seats = DB::table('seats')
+            ->join(
+                'seats_types',
+                'seats.fk_type',
+                '=',
+                'seats_types.id'
+            )
+            ->whereIn(
+                'seats.fk_auditory',
+                $auditoryIds
+            )
+            ->select(
+                'seats.id',
+                'seats.row',
+                'seats.columm',
+                'seats.fk_auditory',
+                'seats_types.type as seats_type'
+            )
+            ->orderBy('seats.row')
+            ->orderBy('seats.columm')
+            ->get();
+
+
+        $reservations = DB::table('reservations')
+            ->whereIn(
+                'fk_screening',
+                $screeningIds
+            )
+            ->get();
+
+
+        return view('films.film', [
+            'film' => $film,
+
+            'screeningsByDate' => $screeningsByDate,
+
+            'seats' => $seats,
+
+            'reservations' => $reservations,
+        ]);
     }
 
     public function edit(Film $film)

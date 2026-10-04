@@ -200,14 +200,21 @@
 
                                         @foreach ($sessions as $screening)
 
-                                            <a
-                                                href="#"
+                                            <button
+                                                type="button"
                                                 class="screening-item"
+                                                onclick="openSeatModal(
+                                                    {{ $screening->id }},
+                                                    {{ $screening->fk_auditory }},
+                                                    '{{ $screening->date_time->format('H:i') }}',
+                                                    '{{ $screening->auditory->number }}'
+    )"
                                             >
 
                                                 <div class="screening-item__time">
                                                     {{ $screening->date_time->format('H:i') }}
                                                 </div>
+
 
                                                 <div class="screening-item__details">
 
@@ -221,11 +228,12 @@
 
                                                 </div>
 
+
                                                 <div class="screening-item__action">
                                                     Selecteer stoel →
                                                 </div>
 
-                                            </a>
+                                            </button>
 
                                         @endforeach
 
@@ -334,4 +342,302 @@
         }
     </script>
 
+
+
+
+    {{-- Seat reservation modal --}}
+    <div
+        class="seat-modal"
+        id="seat-modal"
+    >
+
+        <div
+            class="seat-modal__overlay"
+            onclick="closeSeatModal()"
+        ></div>
+
+
+        <div class="seat-modal__content">
+
+            <button
+                type="button"
+                class="seat-modal__close"
+                onclick="closeSeatModal()"
+            >
+                ×
+            </button>
+
+
+            <div class="seat-modal__header">
+
+            <span>
+                CINEFLEX RESERVERING
+            </span>
+
+                <h2>
+                    Kies je plaatsen
+                </h2>
+
+                <p id="seat-screening-info"></p>
+
+            </div>
+
+
+            <div class="cinema-screen">
+                SCHERM
+            </div>
+
+
+            <div
+                class="seat-modal__seats"
+                id="seat-container"
+            >
+
+                @foreach($seats->groupBy('fk_auditory') as $auditoryId => $auditorySeats)
+
+                    <div
+                        class="auditory-seats"
+                        data-auditory="{{ $auditoryId }}"
+                    >
+
+                        @foreach($auditorySeats->groupBy('row') as $row => $rowSeats)
+
+                            <div class="seat-row">
+
+                            <span class="seat-row__name">
+                                {{ $row }}
+                            </span>
+
+
+                                @foreach($rowSeats as $seat)
+
+                                    <button
+                                        type="button"
+                                        class="seat seat--{{ $seat->seats_type }}"
+                                        data-seat-id="{{ $seat->id }}"
+                                    >
+                                        {{ $seat->columm }}
+                                    </button>
+
+                                @endforeach
+
+                            </div>
+
+                        @endforeach
+
+                    </div>
+
+                @endforeach
+
+            </div>
+
+
+            <div class="seat-legend">
+
+                <div>
+                    <span class="seat-example"></span>
+                    Vrij
+                </div>
+
+                <div>
+                    <span class="seat-example seat-example--selected"></span>
+                    Geselecteerd
+                </div>
+
+                <div>
+                    <span class="seat-example seat-example--occupied"></span>
+                    Bezet
+                </div>
+
+            </div>
+
+
+            <div class="seat-modal__footer">
+
+            <span id="selected-seat-count">
+                0 plaatsen geselecteerd
+            </span>
+
+
+                <button
+                    type="button"
+                    class="seat-reserve-button"
+                >
+                    Verder
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        const reservations = @json($reservations->map(function ($reservation) {
+            return [
+                'seat' => $reservation->fk_seat,
+                'screening' => $reservation->fk_screening,
+            ];
+        })
+    );
+
+
+        const seatModal = document.getElementById('seat-modal');
+        const seatContainer = document.getElementById('seat-container');
+        const screeningInfo = document.getElementById('seat-screening-info');
+        const selectedSeatCount = document.getElementById('selected-seat-count');
+
+        let currentScreeningId = null;
+
+        function openSeatModal(
+            screeningId,
+            auditoryId,
+            time,
+            auditoryNumber
+        ) {
+
+            currentScreeningId = screeningId;
+
+
+            seatModal.classList.add(
+                'seat-modal--active'
+            );
+
+
+            screeningInfo.textContent =
+                'Zaal ' +
+                auditoryNumber +
+                ' · ' +
+                time;
+
+
+            document.querySelectorAll('.auditory-seats')
+                .forEach(function (auditory) {
+
+                    auditory.style.display = 'none';
+
+                });
+
+
+            const selectedAuditory = document.querySelector(
+                '.auditory-seats[data-auditory="' +
+                auditoryId +
+                '"]'
+            );
+
+
+            if (selectedAuditory) {
+
+                selectedAuditory.style.display = 'block';
+
+            }
+
+            document.querySelectorAll('.seat')
+                .forEach(function (seat) {
+
+                    seat.classList.remove(
+                        'seat--selected'
+                    );
+
+                    seat.classList.remove(
+                        'seat--occupied'
+                    );
+
+                    seat.disabled = false;
+
+                });
+
+            reservations.forEach(function (reservation) {
+
+                if (
+                    Number(reservation.screening) ===
+                    Number(screeningId)
+                ) {
+
+                    const seat =
+                        document.querySelector(
+                            '.seat[data-seat-id="' +
+                            reservation.seat +
+                            '"]'
+                        );
+
+
+                    if (seat) {
+
+                        seat.classList.add(
+                            'seat--occupied'
+                        );
+
+                        seat.disabled = true;
+
+                    }
+
+                }
+
+            });
+
+
+            updateSelectedSeats();
+        }
+
+
+        function closeSeatModal() {
+
+            seatModal.classList.remove(
+                'seat-modal--active'
+            );
+
+        }
+
+        document
+            .querySelectorAll('.seat')
+            .forEach(function (seat) {
+
+                seat.addEventListener(
+                    'click',
+                    function () {
+
+                        if (
+                            this.classList.contains(
+                                'seat--occupied'
+                            )
+                        ) {
+                            return;
+                        }
+
+
+                        this.classList.toggle(
+                            'seat--selected'
+                        );
+
+
+                        updateSelectedSeats();
+
+                    }
+                );
+
+            });
+
+
+        function updateSelectedSeats() {
+
+            const count =
+                document.querySelectorAll(
+                    '.seat--selected'
+                ).length;
+
+
+            selectedSeatCount.textContent =
+                count +
+                (
+                    count === 1
+                        ? ' plaats geselecteerd'
+                        : ' plaatsen geselecteerd'
+                );
+        }
+
+    </script>
 @endsection
+
+
