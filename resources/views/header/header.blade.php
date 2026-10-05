@@ -36,6 +36,12 @@
 
         </nav>
 
+        <button class="header__hamburger" id="mobileMenuBtn" aria-label="Menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+        </button>
+
         <div class="header__actions">
             <button class="header__search" aria-label="Zoeken">
                 <svg viewBox="0 0 24 24" fill="none">

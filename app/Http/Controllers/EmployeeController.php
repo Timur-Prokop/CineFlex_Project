@@ -42,7 +42,7 @@ class EmployeeController extends Controller
             'date_of_birth' => 'required|date',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:8|confirmed', // <-- Added |confirmed
-            'fk_role' => 'required|integer|exists:role,id',
+            'fk_role' => 'required|integer',
         ]);
 
         DB::table('users')->insert([
@@ -75,7 +75,7 @@ class EmployeeController extends Controller
             'date_of_birth' => 'required|date',
             'email' => 'required|email|unique:users,email,'.$id,
             'password' => 'nullable|min:8|confirmed', // <-- Added this line
-            'fk_role' => 'required|integer|exists:role,id',
+            'fk_role' => 'required|integer',
         ]);
 
         $data = [
