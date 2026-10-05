@@ -81,7 +81,7 @@ class EmployeeController extends Controller
                     'date',
                     'before_or_equal:' . Carbon::now()->subYears(12)->toDateString(),
                     'after_or_equal:' . Carbon::now()->subYears(105)->toDateString(),
-                ],gu
+                ],
 
                 'email' => ['required', 'email', 'unique:users,email'],
 
