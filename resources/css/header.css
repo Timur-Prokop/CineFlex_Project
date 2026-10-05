@@ -495,3 +495,52 @@
         display: none;
     }
 }
+
+/* Hide the hamburger button on large screens */
+.header__hamburger {
+    display: none;
+    background: none;
+    border: none;
+    color: #fff; /* or your theme text color */
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    margin-left: 15px;
+}
+
+
+
+/* Mobile Layout */
+@media (max-width: 850px) {
+    /* Show the hamburger button */
+    .header__hamburger {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+    .header__nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: #0b0d0f;
+        flex-direction: column;
+        padding: 20px;
+        border-top: 1px solid #25282d;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+        z-index: 999;
+    }
+
+    .header__nav .header__link {
+        width: 100%;
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .header__nav.active {
+        display: flex;
+    }
+}
