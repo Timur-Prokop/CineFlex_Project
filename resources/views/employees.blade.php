@@ -118,7 +118,10 @@
                                 </div>
 
                                 <div class="admin-actions">
-                                    <!-- Pass employee data into data-attributes for JS to read -->
+                                    @php
+                                        $isCurrentUser = auth()->id() === $employee->id;
+                                    @endphp
+
                                     <button type="button" class="btn-edit"
                                             data-id="{{ $employee->id }}"
                                             data-first="{{ $employee->first_name }}"
@@ -127,14 +130,19 @@
                                             data-dob="{{ $employee->date_of_birth }}"
                                             data-email="{{ $employee->email }}"
                                             data-role="{{ $employee->fk_role }}"
-                                            onclick="openEditModal(this)">
+                                            @if(!$isCurrentUser) onclick="openEditModal(this)" @endif
+                                            @if($isCurrentUser) disabled style="opacity: 0.4; border-color: #333; color: #666; cursor: not-allowed;" title="Je kunt je eigen profiel hier niet bewerken" @endif>
                                         Bewerken
                                     </button>
 
-                                    <form action="{{ route('medewerkers.destroy', $employee->id) }}" method="POST" onsubmit="return confirm('Weet je zeker dat je deze medewerker wilt verwijderen?');">
+                                    <form action="{{ route('medewerkers.destroy', $employee->id) }}" method="POST"
+                                          @if(!$isCurrentUser) onsubmit="return confirm('Weet je zeker dat je deze medewerker wilt verwijderen?');" @endif>
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn-delete">Verwijderen</button>
+                                        <button type="submit" class="btn-delete"
+                                                @if($isCurrentUser) disabled style="opacity: 0.4; border-color: #333; color: #666; cursor: not-allowed;" title="Je kunt je eigen profiel niet verwijderen" @endif>
+                                            Verwijderen
+                                        </button>
                                     </form>
                                 </div>
                             </div>

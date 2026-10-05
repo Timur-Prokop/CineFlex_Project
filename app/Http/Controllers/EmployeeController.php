@@ -17,11 +17,9 @@ class EmployeeController extends Controller
 
         $this->authorize('viewAny', User::class);
 
-        // Only get users where deleted_at is NULL (Soft Deletes)
         $employees = DB::table('users')
             ->join('roles', 'users.fk_role', '=', 'roles.id')
             ->select('users.*', 'roles.name as role_name')
-            ->whereNull('users.deleted_at')
             ->where('users.fk_role', '!=', 3)
             ->where('users.fk_role', '!=', auth()->id())
             ->orderBy('users.first_name')
@@ -38,13 +36,35 @@ class EmployeeController extends Controller
         $this->authorize('store', User::class);
 
         $request->validate([
-            'first_name' => 'required|string|max:255',
-            'prefix' => 'nullable|string|max:50',
-            'surname' => 'required|string|max:255',
-            'date_of_birth' => 'required|date',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:8|confirmed', // <-- Added |confirmed
-            'fk_role' => 'required|integer',
+            'first_name' => ['required', 'string', 'max:255'],
+            'prefix' => ['nullable', 'string', 'max:50'],
+            'surname' => ['required', 'string', 'max:255'],
+            'date_of_birth' => [
+                'required',
+                'date',
+                'before_or_equal:' . Carbon::now()->subYears(12)->toDateString(),
+                'after_or_equal:' . Carbon::now()->subYears(105)->toDateString(),
+            ],
+            'email' => ['required', 'email', 'unique:users,email'],
+            'password' => [
+                'required',
+                'confirmed',
+                Password::min(8)->mixedCase()->numbers()->symbols(),
+            ],
+        ], [
+            'first_name.required' => 'Vul je voornaam in.',
+            'first_name.max' => 'Je voornaam is te lang.',
+            'surname.required' => 'Vul je achternaam in.',
+            'surname.max' => 'Je achternaam is te lang.',
+            'date_of_birth.required' => 'Vul je geboortedatum in.',
+            'date_of_birth.date' => 'Vul een geldige geboortedatum in.',
+            'date_of_birth.before_or_equal' => 'Je moet minimaal 12 jaar oud zijn.',
+            'date_of_birth.after_or_equal' => 'Je mag maximaal 100 jaar oud zijn.',
+            'email.required' => 'Vul je e-mailadres in.',
+            'email.email' => 'Vul een geldig e-mailadres in.',
+            'email.unique' => 'Er bestaat al een account met dit e-mailadres.',
+            'password.required' => 'Vul een wachtwoord in.',
+            'password.confirmed' => 'De wachtwoorden komen niet overeen.',
         ]);
 
         DB::table('users')->insert([
@@ -70,49 +90,38 @@ class EmployeeController extends Controller
 
         $this->authorize('update', $employee);
 
-        $request->validate(
-            [
-                'first_name' => ['required', 'string', 'max:255'],
-                'prefix' => ['nullable', 'string', 'max:50'],
-                'surname' => ['required', 'string', 'max:255'],
+        $request->validate([
+            'first_name' => ['required', 'string', 'max:255'],
+            'prefix' => ['nullable', 'string', 'max:50'],
+            'surname' => ['required', 'string', 'max:255'],
+            'date_of_birth' => [
+                'required',
+                'date',
+                'before_or_equal:' . Carbon::now()->subYears(12)->toDateString(),
+                'after_or_equal:' . Carbon::now()->subYears(105)->toDateString(),
+            ],
+            // ADD THE ID HERE to tell Laravel to ignore this specific user when checking uniqueness
+            'email' => ['required', 'email', 'unique:users,email,' . $id],
 
-                'date_of_birth' => [
-                    'required',
-                    'date',
-                    'before_or_equal:' . Carbon::now()->subYears(12)->toDateString(),
-                    'after_or_equal:' . Carbon::now()->subYears(105)->toDateString(),
-                ],
-
-                'email' => ['required', 'email', 'unique:users,email'],
-
-                'password' => [
-                    'required',
-                    'confirmed',
-                    Password::min(8)
-                        ->mixedCase()
-                        ->numbers()
-                        ->symbols(),
-                ],
-                [
-                    'first_name.required' => 'Vul je voornaam in.',
-                    'first_name.max' => 'Je voornaam is te lang.',
-
-                    'surname.required' => 'Vul je achternaam in.',
-                    'surname.max' => 'Je achternaam is te lang.',
-
-                    'date_of_birth.required' => 'Vul je geboortedatum in.',
-                    'date_of_birth.date' => 'Vul een geldige geboortedatum in.',
-                    'date_of_birth.before_or_equal' => 'Je moet minimaal 12 jaar oud zijn.',
-                    'date_of_birth.after_or_equal' => 'Je mag maximaal 100 jaar oud zijn.',
-
-                    'email.required' => 'Vul je e-mailadres in.',
-                    'email.email' => 'Vul een geldig e-mailadres in.',
-                    'email.unique' => 'Er bestaat al een account met dit e-mailadres.',
-
-                    'password.required' => 'Vul een wachtwoord in.',
-                    'password.confirmed' => 'De wachtwoorden komen niet overeen.',
-                ]
-            ]);
+            'password' => [
+                'nullable', // CHANGE TO NULLABLE so they can leave it blank
+                'confirmed',
+                Password::min(8)->mixedCase()->numbers()->symbols(),
+            ],
+        ], [
+            'first_name.required' => 'Vul je voornaam in.',
+            'first_name.max' => 'Je voornaam is te lang.',
+            'surname.required' => 'Vul je achternaam in.',
+            'surname.max' => 'Je achternaam is te lang.',
+            'date_of_birth.required' => 'Vul je geboortedatum in.',
+            'date_of_birth.date' => 'Vul een geldige geboortedatum in.',
+            'date_of_birth.before_or_equal' => 'Je moet minimaal 12 jaar oud zijn.',
+            'date_of_birth.after_or_equal' => 'Je mag maximaal 100 jaar oud zijn.',
+            'email.required' => 'Vul je e-mailadres in.',
+            'email.email' => 'Vul een geldig e-mailadres in.',
+            'email.unique' => 'Er bestaat al een account met dit e-mailadres.',
+            'password.confirmed' => 'De wachtwoorden komen niet overeen.',
+        ]);
 
         $data = [
         'first_name' => $request->first_name,
