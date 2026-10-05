@@ -81,7 +81,7 @@ class EmployeeController extends Controller
                     'date',
                     'before_or_equal:' . Carbon::now()->subYears(12)->toDateString(),
                     'after_or_equal:' . Carbon::now()->subYears(105)->toDateString(),
-                ],gu
+                ],
 
                 'email' => ['required', 'email', 'unique:users,email'],
 
@@ -93,6 +93,25 @@ class EmployeeController extends Controller
                         ->numbers()
                         ->symbols(),
                 ],
+                [
+                    'first_name.required' => 'Vul je voornaam in.',
+                    'first_name.max' => 'Je voornaam is te lang.',
+
+                    'surname.required' => 'Vul je achternaam in.',
+                    'surname.max' => 'Je achternaam is te lang.',
+
+                    'date_of_birth.required' => 'Vul je geboortedatum in.',
+                    'date_of_birth.date' => 'Vul een geldige geboortedatum in.',
+                    'date_of_birth.before_or_equal' => 'Je moet minimaal 12 jaar oud zijn.',
+                    'date_of_birth.after_or_equal' => 'Je mag maximaal 100 jaar oud zijn.',
+
+                    'email.required' => 'Vul je e-mailadres in.',
+                    'email.email' => 'Vul een geldig e-mailadres in.',
+                    'email.unique' => 'Er bestaat al een account met dit e-mailadres.',
+
+                    'password.required' => 'Vul een wachtwoord in.',
+                    'password.confirmed' => 'De wachtwoorden komen niet overeen.',
+                ]
             ]);
 
         $data = [
