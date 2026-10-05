@@ -397,38 +397,32 @@
 
                     <div
                         class="auditory-seats"
-                        data-auditory="{{ $auditoryId }}"
-                    >
+                        data-auditory="{{ $auditoryId }}">
 
                         @foreach($auditorySeats->groupBy('row') as $row => $rowSeats)
-
                             <div class="seat-row">
-
-                            <span class="seat-row__name">
-                                {{ $row }}
-                            </span>
-
-
+                                <span class="seat-row__name">
+                                    {{ $row }}
+                                </span>
                                 @foreach($rowSeats as $seat)
-
-                                    <button
-                                        type="button"
-                                        class="seat seat--{{ $seat->seats_type }}"
-                                        data-seat-id="{{ $seat->id }}"
-                                    >
-                                        {{ $seat->columm }}
-                                    </button>
+                                        <button
+                                            type="button"
+                                            class="seat seat--standaard"
+                                            data-seat-id="{{ $seat->id }}"
+                                            @if($seat->columm == 2)
+                                                style="margin-right:20px"
+                                            @elseif($seat->columm == 9)
+                                                style="margin-left:20px"
+                                            @endif
+                                        >
+                                            {{ $seat->columm }}
+                                        </button>
 
                                 @endforeach
-
                             </div>
-
                         @endforeach
-
                     </div>
-
                 @endforeach
-
             </div>
 
 

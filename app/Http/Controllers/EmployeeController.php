@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use Illuminate\Validation\Rules\Password;
 
 
 class EmployeeController extends Controller
@@ -42,7 +44,7 @@ class EmployeeController extends Controller
             'date_of_birth' => 'required|date',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:8|confirmed', // <-- Added |confirmed
-            'fk_role' => 'required|integer|exists:role,id',
+            'fk_role' => 'required|integer',
         ]);
 
         DB::table('users')->insert([
@@ -68,15 +70,49 @@ class EmployeeController extends Controller
 
         $this->authorize('update', $employee);
 
-        $request->validate([
-            'first_name' => 'required|string|max:255',
-            'prefix' => 'nullable|string|max:50',
-            'surname' => 'required|string|max:255',
-            'date_of_birth' => 'required|date',
-            'email' => 'required|email|unique:users,email,'.$id,
-            'password' => 'nullable|min:8|confirmed', // <-- Added this line
-            'fk_role' => 'required|integer|exists:role,id',
-        ]);
+        $request->validate(
+            [
+                'first_name' => ['required', 'string', 'max:255'],
+                'prefix' => ['nullable', 'string', 'max:50'],
+                'surname' => ['required', 'string', 'max:255'],
+
+                'date_of_birth' => [
+                    'required',
+                    'date',
+                    'before_or_equal:' . Carbon::now()->subYears(12)->toDateString(),
+                    'after_or_equal:' . Carbon::now()->subYears(105)->toDateString(),
+                ],
+
+                'email' => ['required', 'email', 'unique:users,email'],
+
+                'password' => [
+                    'required',
+                    'confirmed',
+                    Password::min(8)
+                        ->mixedCase()
+                        ->numbers()
+                        ->symbols(),
+                ],
+                [
+                    'first_name.required' => 'Vul je voornaam in.',
+                    'first_name.max' => 'Je voornaam is te lang.',
+
+                    'surname.required' => 'Vul je achternaam in.',
+                    'surname.max' => 'Je achternaam is te lang.',
+
+                    'date_of_birth.required' => 'Vul je geboortedatum in.',
+                    'date_of_birth.date' => 'Vul een geldige geboortedatum in.',
+                    'date_of_birth.before_or_equal' => 'Je moet minimaal 12 jaar oud zijn.',
+                    'date_of_birth.after_or_equal' => 'Je mag maximaal 100 jaar oud zijn.',
+
+                    'email.required' => 'Vul je e-mailadres in.',
+                    'email.email' => 'Vul een geldig e-mailadres in.',
+                    'email.unique' => 'Er bestaat al een account met dit e-mailadres.',
+
+                    'password.required' => 'Vul een wachtwoord in.',
+                    'password.confirmed' => 'De wachtwoorden komen niet overeen.',
+                ]
+            ]);
 
         $data = [
         'first_name' => $request->first_name,

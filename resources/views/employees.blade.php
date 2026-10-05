@@ -59,6 +59,16 @@
                     <span class="section-label">ADMIN PANEEL</span>
                     <h1>Medewerkers <span>Beheer</span></h1>
                 </div>
+                @if ($errors->any())
+                    <div style="background: rgba(255, 58, 94, 0.1); border: 1px solid #ff3a5e; border-radius: 12px; padding: 20px; margin-top: 20px; color: #ff3a5e;">
+                        <strong style="display: block; margin-bottom: 10px; font-size: 15px;">Er ging iets mis:</strong>
+                        <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
             </div>
         </section>
 

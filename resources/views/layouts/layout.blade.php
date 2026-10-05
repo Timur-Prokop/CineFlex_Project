@@ -18,3 +18,16 @@
 @include("footer.footer")
 </body>
 </html>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const headerNav = document.querySelector('.header__nav');
+
+        if (mobileMenuBtn && headerNav) {
+            mobileMenuBtn.addEventListener('click', function() {
+                headerNav.classList.toggle('active');
+            });
+        }
+    });
+</script>
