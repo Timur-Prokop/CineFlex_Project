@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use Illuminate\Validation\Rules\Password;
 
 
 class EmployeeController extends Controller
@@ -68,15 +70,30 @@ class EmployeeController extends Controller
 
         $this->authorize('update', $employee);
 
-        $request->validate([
-            'first_name' => 'required|string|max:255',
-            'prefix' => 'nullable|string|max:50',
-            'surname' => 'required|string|max:255',
-            'date_of_birth' => 'required|date',
-            'email' => 'required|email|unique:users,email,'.$id,
-            'password' => 'nullable|min:8|confirmed', // <-- Added this line
-            'fk_role' => 'required|integer',
-        ]);
+        $request->validate(
+            [
+                'first_name' => ['required', 'string', 'max:255'],
+                'prefix' => ['nullable', 'string', 'max:50'],
+                'surname' => ['required', 'string', 'max:255'],
+
+                'date_of_birth' => [
+                    'required',
+                    'date',
+                    'before_or_equal:' . Carbon::now()->subYears(12)->toDateString(),
+                    'after_or_equal:' . Carbon::now()->subYears(105)->toDateString(),
+                ],gu
+
+                'email' => ['required', 'email', 'unique:users,email'],
+
+                'password' => [
+                    'required',
+                    'confirmed',
+                    Password::min(8)
+                        ->mixedCase()
+                        ->numbers()
+                        ->symbols(),
+                ],
+            ]);
 
         $data = [
         'first_name' => $request->first_name,
