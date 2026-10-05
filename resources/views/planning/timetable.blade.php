@@ -444,103 +444,76 @@
 
                             @foreach($dayFilms as $film)
 
-
-                                <article class="schedule-film">
-
-
-
-                                    <div class="schedule-film__poster">
+                                <a href="{{route('show.film', $film->title)}}">
+                                    <article class="schedule-film">
 
 
-                                        @if($film->pic_path)
 
-                                            <img
-                                                src="{{ $film->pic_path }}"
-                                                alt="{{ $film->title }}"
-                                            >
-
-                                        @else
-
-                                            <div class="schedule-film__placeholder">
-                                                CINEFLEX
-                                            </div>
-
-                                        @endif
-
-                                    </div>
+                                        <div class="schedule-film__poster">
 
 
-                                    <div class="schedule-film__info">
+                                            @if($film->pic_path)
 
-                                        <div class="schedule-film__main">
+                                                <img
+                                                    src="{{ $film->pic_path }}"
+                                                    alt="{{ $film->title }}"
+                                                >
+
+                                            @else
+
+                                                <div class="schedule-film__placeholder">
+                                                    CINEFLEX
+                                                </div>
+
+                                            @endif
+
+                                        </div>
+
+
+                                        <div class="schedule-film__info">
+
+                                            <div class="schedule-film__main">
 
                                             <span class="schedule-film__label">
                                                 NU TE ZIEN
                                             </span>
 
 
-                                            <h2>
-                                                {{ $film->title }}
-                                            </h2>
+                                                <h2>
+                                                    {{ $film->title }}
+                                                </h2>
 
 
-                                            <div class="schedule-film__meta">
+                                                <div class="schedule-film__meta">
 
 
-                                                <div class="meta-item">
+                                                    <div class="meta-item">
 
-                                                    <svg
-                                                        viewBox="0 0 24 24"
-                                                        fill="none"
-                                                        stroke="currentColor"
-                                                        stroke-width="1.8"
-                                                    >
-                                                        <circle
-                                                            cx="12"
-                                                            cy="12"
-                                                            r="9"
-                                                        />
+                                                        <svg
+                                                            viewBox="0 0 24 24"
+                                                            fill="none"
+                                                            stroke="currentColor"
+                                                            stroke-width="1.8"
+                                                        >
+                                                            <circle
+                                                                cx="12"
+                                                                cy="12"
+                                                                r="9"
+                                                            />
 
-                                                        <path
-                                                            d="M12 7v5l3 2"
-                                                        />
-                                                    </svg>
+                                                            <path
+                                                                d="M12 7v5l3 2"
+                                                            />
+                                                        </svg>
 
 
-                                                    <span>
+                                                        <span>
                                                         {{ $film->duration }} min
                                                     </span>
 
-                                                </div>
+                                                    </div>
 
 
-
-                                                <div class="meta-item">
-
-                                                    <svg
-                                                        viewBox="0 0 24 24"
-                                                        fill="none"
-                                                        stroke="currentColor"
-                                                        stroke-width="1.8"
-                                                    >
-                                                        <path
-                                                            d="M4 19v-6a8 8 0 0 1 16 0v6"
-                                                        />
-
-                                                        <path
-                                                            d="M2 19h20"
-                                                        />
-                                                    </svg>
-
-
-                                                    <span>
-                                                        Zaal {{ $film->number }}
-                                                    </span>
-
-                                                </div>
-
-
-                                                @if(isset($film->seats_quantity))
 
                                                     <div class="meta-item">
 
@@ -551,98 +524,129 @@
                                                             stroke-width="1.8"
                                                         >
                                                             <path
-                                                                d="M4 18v-2a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v2"
+                                                                d="M4 19v-6a8 8 0 0 1 16 0v6"
                                                             />
 
-                                                            <circle
-                                                                cx="12"
-                                                                cy="7"
-                                                                r="3"
+                                                            <path
+                                                                d="M2 19h20"
                                                             />
                                                         </svg>
 
 
                                                         <span>
+                                                        Zaal {{ $film->number }}
+                                                    </span>
+
+                                                    </div>
+
+
+                                                    @if(isset($film->seats_quantity))
+
+                                                        <div class="meta-item">
+
+                                                            <svg
+                                                                viewBox="0 0 24 24"
+                                                                fill="none"
+                                                                stroke="currentColor"
+                                                                stroke-width="1.8"
+                                                            >
+                                                                <path
+                                                                    d="M4 18v-2a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v2"
+                                                                />
+
+                                                                <circle
+                                                                    cx="12"
+                                                                    cy="7"
+                                                                    r="3"
+                                                                />
+                                                            </svg>
+
+
+                                                            <span>
                                                             {{ $film->seats_quantity }}
                                                             plaatsen
                                                         </span>
 
-                                                    </div>
+                                                        </div>
 
-                                                @endif
+                                                    @endif
+
+                                                </div>
 
                                             </div>
 
-                                        </div>
-
-                                        <div class="schedule-film__time">
+                                            <div class="schedule-film__time">
 
                                             <span>
                                                 Start
                                             </span>
 
 
-                                            <strong>
-                                                {{
-                                                    \Carbon\Carbon::parse(
-                                                        $film->date_time
-                                                    )->format('H:i')
-                                                }}
-                                            </strong>
+                                                <strong>
+                                                    {{
+                                                        \Carbon\Carbon::parse(
+                                                            $film->date_time
+                                                        )->format('H:i')
+                                                    }}
+                                                </strong>
 
 
-                                            <small>
-                                                Eindigt ±
+                                                <small>
+                                                    Eindigt ±
 
-                                                {{
-                                                    \Carbon\Carbon::parse(
-                                                        $film->date_time
-                                                    )
-                                                    ->addMinutes(
-                                                        $film->duration
-                                                    )
-                                                    ->format('H:i')
-                                                }}
-                                            </small>
+                                                    {{
+                                                        \Carbon\Carbon::parse(
+                                                            $film->date_time
+                                                        )
+                                                        ->addMinutes(
+                                                            $film->duration
+                                                        )
+                                                        ->format('H:i')
+                                                    }}
+                                                </small>
+
+                                            </div>
 
                                         </div>
 
-                                    </div>
 
+                                        <div class="schedule-film__action">
 
-                                    <div class="schedule-film__action">
-
-                                        <a
-                                            href="{{ route('show.film', $film->title) }}"
-                                            class="schedule-reserve-button"
-                                        >
-                                            Film bekijken
-                                            <span>→</span>
-                                        </a>
-
-                                        @can('can-access-worker-area')
-                                            <form
-                                                action="{{ route('planning.destroy', $film->id) }}"
-                                                method="POST"
-                                                class="screening-delete-form"
-                                                onsubmit="return confirm('Weet je zeker dat je deze voorstelling wilt verwijderen?');"
-                                            >
-                                                @csrf
-                                                @method('DELETE')
-
-                                                <button
-                                                    type="submit"
-                                                    class="screening-delete-button"
+                                            @can('can-access-client-area')
+                                                <a
+                                                    href="{{ route('show.film', $film->id) }}"
+                                                    class="schedule-reserve-button"
                                                 >
-                                                    <span aria-hidden="true">×</span>
-                                                    Verwijder voorstelling
-                                                </button>
-                                            </form>
-                                        @endcan
+                                                    Plaats reserveren
+                                                    <span>→</span>
+                                                </a>
+                                            @endcan
 
-                                    </div>
+                                            @can('can-access-worker-area')
+                                                    <form
+                                                        action="{{ route('planning.destroy', $film->id) }}"
+                                                        method="POST"
+                                                        class="screening-delete-form"
+                                                        onsubmit="return confirm('Weet je zeker dat je deze voorstelling wilt verwijderen?');"
+                                                    >
+                                                        @csrf
+                                                        @method('DELETE')
 
-                                </article>
+                                                        <button
+                                                            type="submit"
+                                                            class="screening-delete-button"
+                                                        >
+                                                            <span aria-hidden="true">×</span>
+                                                            Verwijder voorstelling
+                                                        </button>
+                                                    </form>
+                                            @endcan
+
+                                        </div>
+
+                                    </article>
+                                </a>
+
 
 
                             @endforeach
