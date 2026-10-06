@@ -150,6 +150,7 @@ class FilmController extends Controller
                 'seats.row',
                 'seats.columm',
                 'seats.fk_auditory',
+                'seats.fk_type', // Added column here
                 'seats_types.type as seats_type'
             )
             ->orderBy('seats.row')
