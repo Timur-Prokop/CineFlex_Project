@@ -16,3 +16,24 @@ body {
     margin: 0;
     padding: 0;
 }
+
+:root {
+    --cineflex-bg: #050607;
+    --cineflex-surface: #0b0d0f;
+    --cineflex-surface-light: #14171a;
+
+    --cineflex-green: #39ff88;
+    --cineflex-purple: #9b5cff;
+
+    --cineflex-gradient: linear-gradient(
+        135deg,
+        var(--cineflex-green),
+        var(--cineflex-purple)
+    );
+
+    --cineflex-text: #ffffff;
+    --cineflex-text-muted: #888d94;
+    --cineflex-border: #25282d;
+
+    --cineflex-radius: 14px;
+}

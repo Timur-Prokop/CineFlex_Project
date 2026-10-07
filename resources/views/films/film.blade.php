@@ -161,7 +161,8 @@
                                                     {{ $screening->id }},
                                                     {{ $screening->fk_auditory }},
                                                     '{{ $screening->date_time->format('H:i') }}',
-                                                    '{{ $screening->auditory->number }}'
+                                                    '{{ $screening->auditory->number }}',
+                                                    '{{ $film->title }}'
                                                 )"
                                             >
                                                 <span class="screening-item__time">
@@ -265,6 +266,8 @@
                                         class="seat {{ $seat->fk_type == 2 ? 'seat--double' : 'seat--standard' }} {{ $hasAisleAfter ? 'seat--aisle-after' : '' }}"
                                         data-seat-id="{{ $seat->id }}"
                                         data-seat-type="{{ $seat->fk_type }}"
+                                        data-seat-row="{{ $seat->row }}"
+                                        data-seat-column="{{ $seat->columm }}"
                                         title="Rij {{ $row }}, Stoel {{ $seat->columm }} {{ $seat->fk_type == 2 ? '(Duo)' : '' }}"
                                     >
                                         {{ $seat->columm }}
@@ -304,6 +307,89 @@
         </div>
     </div>
 
+    {{-- Reservation confirmation modal --}}
+    <div class="reservation-modal" id="reservation-modal">
+        <div
+            class="reservation-modal__overlay"
+            onclick="closeReservationModal()"
+        ></div>
+
+        <div class="reservation-modal__content">
+
+            <button
+                type="button"
+                class="reservation-modal__close"
+                onclick="closeReservationModal()"
+            >
+                ×
+            </button>
+
+            <div class="reservation-modal__header">
+                <span>CINEFLEX RESERVERING</span>
+
+                <h2>Reservering bevestigen</h2>
+
+                <p>
+                    Controleer je geselecteerde plaatsen.
+                </p>
+            </div>
+
+            <div class="reservation-modal__details">
+
+                <div class="reservation-modal__detail">
+                    <span>Voorstelling</span>
+                    <strong id="reservation-screening-info"></strong>
+                </div>
+
+                <div class="reservation-modal__detail">
+                    <span>Geselecteerde plaatsen</span>
+
+                    <div
+                        class="reservation-modal__seats"
+                        id="reservation-selected-seats"
+                    ></div>
+                </div>
+
+            </div>
+
+            <form
+                method="POST"
+                action="{{ route('reservations.store') }}"
+                id="reservation-form"
+            >
+                @csrf
+
+                <input
+                    type="hidden"
+                    name="screening_id"
+                    id="reservation-screening-id"
+                >
+
+                <div id="reservation-seat-inputs"></div>
+
+                <div class="reservation-modal__actions">
+
+                    <button
+                        type="button"
+                        class="reservation-modal__cancel"
+                        onclick="closeReservationModal()"
+                    >
+                        Terug
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="reservation-modal__confirm"
+                    >
+                        Bevestig reservering
+                    </button>
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+
     <script>
         const reservations = @json($reservations->map(function ($reservation) {
             return [
@@ -316,6 +402,11 @@
         const screeningInfo = document.getElementById('seat-screening-info');
         const selectedSeatCount = document.getElementById('selected-seat-count');
         const proceedButton = document.getElementById('proceedButton');
+        const reservationModal = document.getElementById('reservation-modal');
+        const reservationScreeningInfo = document.getElementById('reservation-screening-info');
+        const reservationScreeningId = document.getElementById('reservation-screening-id');
+        const reservationSelectedSeats = document.getElementById('reservation-selected-seats');
+        const reservationSeatInputs = document.getElementById('reservation-seat-inputs');
 
         let currentScreeningId = null;
 
@@ -340,10 +431,10 @@
             if (form) form.requestSubmit();
         }
 
-        function openSeatModal(screeningId, auditoryId, time, auditoryNumber) {
+        function openSeatModal(screeningId, auditoryId, time, auditoryNumber, title) {
             currentScreeningId = screeningId;
             seatModal.classList.add('seat-modal--active');
-            screeningInfo.textContent = 'Zaal ' + auditoryNumber + ' · ' + time;
+            screeningInfo.textContent = 'Zaal ' + auditoryNumber + ' · ' + time + ' · ' + title;
 
             document.querySelectorAll('.auditory-seats').forEach(a => a.style.display = 'none');
 
@@ -394,6 +485,65 @@
             selectedSeatCount.textContent = totalCapacity + (totalCapacity === 1 ? ' plaats geselecteerd' : ' plaatsen geselecteerd');
 
             proceedButton.hidden = totalCapacity < 1;
+        }
+
+        function getSelectedSeatIds() {
+            return Array.from(document.querySelectorAll('.seat--selected'))
+                .map(seat => Number(seat.dataset.seatId));
+        }
+
+        proceedButton.addEventListener('click', function () {
+            const selectedSeatIds = getSelectedSeatIds();
+
+            if (selectedSeatIds.length === 0) {
+                return;
+            }
+
+            reservationScreeningId.value = currentScreeningId;
+
+            reservationScreeningInfo.textContent = screeningInfo.textContent;
+
+            reservationSelectedSeats.innerHTML = '';
+
+            selectedSeatIds.forEach(seatId => {
+                const seat = document.querySelector(
+                    '.seat[data-seat-id="' + seatId + '"]'
+                );
+
+                if (!seat) return;
+
+                const rowName = seat.dataset.seatRow;
+                const columnName = seat.dataset.seatColumn;
+
+                const seatElement = document.createElement('span');
+
+                seatElement.classList.add('reservation-seat');
+                seatElement.textContent = rowName + columnName;
+
+                reservationSelectedSeats.appendChild(seatElement);
+            });
+
+            reservationSeatInputs.innerHTML = '';
+
+            selectedSeatIds.forEach(seatId => {
+                const input = document.createElement('input');
+
+                input.type = 'hidden';
+                input.name = 'seat_ids[]';
+                input.value = seatId;
+
+                reservationSeatInputs.appendChild(input);
+            });
+
+            closeSeatModal();
+
+            reservationModal.classList.add('reservation-modal--active');
+        });
+
+        function closeReservationModal() {
+            reservationModal.classList.remove('reservation-modal--active');
+            seatModal.classList.add('seat-modal--active');
+
         }
 
     </script>

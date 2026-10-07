@@ -104,6 +104,18 @@
                             Profiel
                         </a>
 
+                        <a
+                            href="{{ route('reservations.index') }}"
+                            class="header__dropdown-link"
+                        >
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="M3 9C3 7.9 3.9 7 5 7H19C20.1 7 21 7.9 21 9V10.5C19.9 10.5 19 11.4 19 12.5C19 13.6 19.9 14.5 21 14.5V16C21 17.1 20.1 18 19 18H5C3.9 18 3 17.1 3 16V14.5C4.1 14.5 5 13.6 5 12.5C5 11.4 4.1 10.5 3 10.5V9Z"></path>
+                                <path d="M12 9.5V14.5"></path>
+                            </svg>
+
+                            Mijn reserveringen
+                        </a>
+
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 

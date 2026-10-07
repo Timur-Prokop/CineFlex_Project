@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PlanningController;
-use App\Http\Controllers\ReservationsController;
+use App\Http\Controllers\ReservationController;
 
 
 
@@ -198,4 +198,12 @@ Route::middleware(['can:can-access-worker-area'])->group(function () {
 
 //----------------------------------------------------------------------------------//
 
+//----------------------------reservations------------------------------------------//
 
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/reservations', [ReservationController::class, 'index'])
+        ->name('reservations.index');
+
+    Route::post('/make-reservations', [ReservationController::class, 'store'])
+        ->name('reservations.store');
+});
