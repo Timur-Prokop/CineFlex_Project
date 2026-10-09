@@ -317,7 +317,7 @@
     color: var(--cineflex-text);
 }
 
-.reservation-seat__row {
+.reservation-seat__number {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -333,17 +333,11 @@
     font-weight: 700;
 }
 
-.reservation-seat__number {
-    padding: 0 10px;
-
-    font-size: 0.8rem;
-    font-weight: 600;
-}
-
 .reservation-seat__type {
     padding: 3px 7px;
 
     margin-right: 5px;
+    margin-left: 5px;
 
     background: rgba(155, 92, 255, 0.12);
     border-radius: 5px;
@@ -500,5 +494,95 @@
 
     .reservation-card__info {
         grid-template-columns: 1fr;
+    }
+}
+
+/* ========================================
+   Upcoming and past reservation sections
+   ======================================== */
+
+.reservation-section {
+    margin-bottom: 48px;
+}
+
+.reservation-section__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+    margin-bottom: 20px;
+}
+
+.reservation-section__header h2 {
+    margin: 0;
+
+    color: var(--cineflex-text);
+
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.reservation-section__header p {
+    margin: 8px 0 0;
+
+    color: var(--cineflex-text-muted);
+
+    font-size: 0.9rem;
+}
+
+.reservation-section__count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 36px;
+    height: 36px;
+    padding: 0 10px;
+
+    background: rgba(57, 255, 136, 0.08);
+    border: 1px solid rgba(57, 255, 136, 0.25);
+    border-radius: 10px;
+
+    color: var(--cineflex-green);
+
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.reservation-section__empty {
+    padding: 22px;
+
+    background: var(--cineflex-surface);
+    border: 1px solid var(--cineflex-border);
+    border-radius: var(--cineflex-radius);
+
+    color: var(--cineflex-text-muted);
+
+    font-size: 0.9rem;
+}
+
+.reservation-section--past .reservation-card {
+    opacity: 0.78;
+}
+
+.reservation-section--past .reservation-card:hover {
+    opacity: 1;
+}
+
+.reservation-section--past .reservation-card__status {
+    background: rgba(136, 141, 148, 0.08);
+    border-color: var(--cineflex-border);
+    color: var(--cineflex-text-muted);
+}
+
+@media (max-width: 600px) {
+    .reservation-section__header h2 {
+        font-size: 1.2rem;
+    }
+
+    .reservation-section__header p {
+        max-width: 280px;
+        line-height: 1.5;
     }
 }

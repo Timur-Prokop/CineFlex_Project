@@ -23,16 +23,29 @@ class ReservationController extends Controller
             'screening.auditory',
         ])
             ->where('fk_user', Auth::id())
-            ->orderByDesc(
-                Screening::select('date_time')
-                    ->whereColumn('screenings.id', 'reservations.fk_screening')
-            )
             ->get();
 
-        $reservationsByScreening = $reservations->groupBy('fk_screening');
+        $now = now();
 
-        return view('reservations', [
-            'reservationsByScreening' => $reservationsByScreening,
+        $upcomingReservations = $reservations
+            ->filter(function ($reservation) use ($now) {
+                return $reservation->screening->date_time->isAfter($now);
+            })
+            ->sortBy(function ($reservation) {
+                return $reservation->screening->date_time->getTimestamp();
+            });
+
+        $pastReservations = $reservations
+            ->filter(function ($reservation) use ($now) {
+                return $reservation->screening->date_time->lessThanOrEqualTo($now);
+            })
+            ->sortByDesc(function ($reservation) {
+                return $reservation->screening->date_time->getTimestamp();
+            });
+
+        return view('reservations.reservations', [
+            'upcomingReservationsByScreening' => $upcomingReservations->groupBy('fk_screening'),
+            'pastReservationsByScreening' => $pastReservations->groupBy('fk_screening'),
         ]);
     }
 
