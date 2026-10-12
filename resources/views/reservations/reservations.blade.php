@@ -20,6 +20,10 @@
                     <p>
                         Een overzicht van je gereserveerde plaatsen.
                     </p>
+
+                    <p>
+                        <strong>( ! ) Let op! Reserveringen kunnen geannuleerd worden alleen maar een dag van tevoren.</strong>
+                    </p>
                 </div>
 
             </header>

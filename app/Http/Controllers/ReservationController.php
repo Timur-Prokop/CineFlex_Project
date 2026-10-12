@@ -73,6 +73,11 @@ class ReservationController extends Controller
                 'distinct',
                 'exists:seats,id',
             ],
+            [
+                'seat_ids.required' => 'Geen zitplaatsen gekozen',
+                'screening_id.exists' => 'Dit voorstelling bestaat niet meer',
+                'seat_ids.*.exists' => "Er zijn geen zitplaatsen met dit nummer die u gekozen heeft"
+            ]
         ]);
 
         $userId = Auth::id();
@@ -124,6 +129,14 @@ class ReservationController extends Controller
                 ]);
             }
 
+            $bookingCutoff = $screening->date_time->copy()->subMinutes(30);
+
+            if (now()->greaterThanOrEqualTo($bookingCutoff)) {
+                throw ValidationException::withMessages([
+                    'screening_id' => 'Reserveren is niet meer mogelijk binnen 30 minuten voor aanvang.',
+                ]);
+            }
+
             /*
              * Create one reservation row per seat.
              */
@@ -141,5 +154,9 @@ class ReservationController extends Controller
         return redirect()
             ->route('reservations.index')
             ->with('success', 'Je reservering is succesvol geplaatst.');
+    }
+
+    public function destroy(Request $request) {
+
     }
 }

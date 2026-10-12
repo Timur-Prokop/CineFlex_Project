@@ -586,3 +586,50 @@
         line-height: 1.5;
     }
 }
+
+/* Cancellation button */
+.reservation-button__cancel {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 10px 18px;
+
+    background: rgba(255, 75, 85, 0.08);
+    border: 1px solid rgba(255, 75, 85, 0.35);
+    border-radius: 10px;
+
+    color: #ff6972;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.reservation-button__cancel:hover {
+    background: rgba(255, 75, 85, 0.16);
+    border-color: #ff6972;
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+.reservation-button__cancel:active {
+    transform: translateY(0);
+}
+
+.reservation-button__cancel:focus-visible {
+    outline: 2px solid #ff6972;
+    outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+    .reservation-button__cancel {
+        width: 100%;
+        padding: 12px 18px;
+    }
+}

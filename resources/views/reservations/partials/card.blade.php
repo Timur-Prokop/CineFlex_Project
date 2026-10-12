@@ -84,13 +84,15 @@
         <div class="reservation-card__footer">
             <span> Reserveringsnummer </span>
             <strong> #{{ $firstReservation->id }} </strong>
-            {{-- Future cancellation button goes here --}}
-            {{-- <form method="POST" action="{{ route('reservations.destroy', $firstReservation->id) }}" >
-             @csrf
-              @method('DELETE')
-              <button type="submit">
-               Annuleren </button>
-               </form> --}}
+
+            @if ($screening->date_time->isAfter(now()->addDay()))
+                <form method="POST" action="{{ route('reservations.destroy', $firstReservation->id) }}">
+                    @csrf
+                    @method('DELETE')
+
+                    <button class="reservation-button__cancel" type="submit">Annuleren</button>
+                </form>
+            @endif
         </div>
     </div>
 </article>

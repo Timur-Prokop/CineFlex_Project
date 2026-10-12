@@ -112,6 +112,19 @@
                     <p>{{ $film->description }}</p>
                 </div>
 
+                @if (session('success'))
+                    <div class="alert--success">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
+
+                @if ($errors->any())
+                    <div class="alert--error">
+                        {{ $errors->first() }}
+                    </div>
+                @endif
+
                 <section class="film-screenings" id="screenings">
                     <div class="film-screenings__header">
                         <span class="section-label">VOORSTELLINGEN</span>
