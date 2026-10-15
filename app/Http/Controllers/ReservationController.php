@@ -76,7 +76,7 @@ class ReservationController extends Controller
             [
                 'seat_ids.required' => 'Geen zitplaatsen gekozen',
                 'screening_id.exists' => 'Dit voorstelling bestaat niet meer',
-                'seat_ids.*.exists' => "Er zijn geen zitplaatsen met dit nummer die u gekozen heeft"
+                'seat_ids.*.exists' => "Er zijn geen zitplaatsen met nummer dat u gekozen heeft"
             ]
         ]);
 
@@ -133,7 +133,7 @@ class ReservationController extends Controller
 
             if (now()->greaterThanOrEqualTo($bookingCutoff)) {
                 throw ValidationException::withMessages([
-                    'screening_id' => 'Reserveren is niet meer mogelijk binnen 30 minuten voor aanvang.',
+                    'screening_id' => 'Reserveren is niet mogelijk binnen 30 minuten voor aanvang.',
                 ]);
             }
 
@@ -156,7 +156,25 @@ class ReservationController extends Controller
             ->with('success', 'Je reservering is succesvol geplaatst.');
     }
 
-    public function destroy(Request $request) {
+    public function destroy($id)
+    {
+        $reservation = Reservation::where('fk_user', Auth::id())
+            ->findOrFail($id);
 
+        $deadline = $reservation->screening->date_time
+            ->copy()
+            ->subHours(24);
+
+        if (now()->greaterThanOrEqualTo($deadline)) {
+            throw ValidationException::withMessages([
+                'reservation' => 'Annuleren kan alleen tot 24 uur voor de voorstelling.',
+            ]);
+        }
+
+        $reservation->delete();
+
+        return redirect()
+            ->route('reservations.index')
+            ->with('success', 'Je reservering is succesvol geanuleerd.');
     }
 }
