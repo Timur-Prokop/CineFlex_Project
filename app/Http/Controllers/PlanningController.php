@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Reservation;
+use App\Models\Seat;
 use Illuminate\Support\Facades\DB;
 use App\Models\Film;
 use App\Models\Screening;
@@ -32,11 +34,23 @@ class PlanningController extends Controller
                 'films.duration',
                 'films.pic_path',
                 'auditories.number',
-                'auditories.seats_quantity'
+                'auditories.seats_quantity',
+                'screenings.id as screening_id'
             )
             ->where('screenings.date_time', '>=', now())
             ->orderBy('screenings.date_time')
             ->get();
+
+        $seats = Seat::query()
+            ->orderBy('fk_auditory')
+            ->orderBy('row')
+            ->orderBy('columm')
+            ->get();
+
+        $reservations = Reservation::query()
+            ->select('fk_seat', 'fk_screening')
+            ->get();
+
 
         $allFilms = DB::table('films')
             ->orderBy('title')
@@ -49,7 +63,9 @@ class PlanningController extends Controller
         return view('planning.timetable', [
             'films' => $films,
             'allFilms' => $allFilms,
-            'auditories' => $auditories
+            'auditories' => $auditories,
+            'reservations' => $reservations,
+            'seats' => $seats
         ]);
     }
 
