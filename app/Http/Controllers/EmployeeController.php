@@ -135,7 +135,7 @@ class EmployeeController extends Controller
 
         // Only update password if a new one is typed in the modal
         if ($request->filled('password')) {
-        $data['password_hash'] = Hash::make($request->password);
+        $data['password'] = Hash::make($request->password);
         }
 
         DB::table('users')->where('id', $id)->update($data);

@@ -211,7 +211,7 @@
                         <!-- The name MUST be password_confirmation for Laravel to recognize it -->
                         <div style="position: relative;">
                             <!-- Added style="padding-right: 60px;" so text doesn't go behind the button -->
-                            <input type="password" name="password-confirmation" class="form-control" minlength="8" style="padding-right: 60px;">
+                            <input type="password" name="password_confirmation" class="form-control" minlength="8" style="padding-right: 60px;">
 
                             <!-- The Show Button -->
                             <button type="button" class="toggle-password-btn" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #a9adb4; font-size: 13px; font-weight: bold; cursor: pointer;">
@@ -284,7 +284,7 @@
                         <label>WACHTWOORD BEVESTIGEN</label>
                         <div style="position: relative;">
                             <!-- Added style="padding-right: 60px;" so text doesn't go behind the button -->
-                            <input type="password" name="password-confirmation" class="form-control" minlength="8" style="padding-right: 60px;">
+                            <input type="password" name="password_confirmation" class="form-control" minlength="8" style="padding-right: 60px;">
 
                             <!-- The Show Button -->
                             <button type="button" class="toggle-password-btn" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #a9adb4; font-size: 13px; font-weight: bold; cursor: pointer;">
