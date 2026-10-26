@@ -410,27 +410,25 @@
 
 
 .schedule-reserve-button {
-    height: 47px;
-    width: 100%;
-
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 8px;
 
-    gap: 10px;
-
+    width: 100%;
+    height: 47px;
     padding: 0 19px;
+    box-sizing: border-box;
 
     background: transparent;
-
     border: 1px solid #38423a;
-    border-radius: 9px;
+    border-radius: 10px;
 
     color: #d4d9d5;
-
-    font: inherit;
+    font-family: inherit;
     font-size: 12px;
-    font-weight: 700;
+    font-weight: 600;
+    line-height: 1.2;
 
     cursor: pointer;
 
@@ -442,23 +440,17 @@
         box-shadow 0.2s ease;
 }
 
-
 .schedule-reserve-button span {
     font-size: 17px;
 }
 
-
 .schedule-reserve-button:hover {
     transform: translateY(-2px);
-
     background: #39f477;
-
     border-color: #39f477;
-
     color: #041008;
 
-    box-shadow:
-        0 10px 25px rgba(57, 244, 119, 0.12);
+    box-shadow: 0 10px 25px rgba(57, 244, 119, 0.12);
 }
 
 .schedule-empty {
@@ -1130,4 +1122,537 @@
     border-color: #ff4d6d;
     box-shadow: 0 0 14px rgba(255, 77, 109, 0.15);
     transform: translateY(-1px);
+}
+
+.schedule-film__link {
+    display: contents;
+    text-decoration: none;
+    color: inherit;
+}
+
+/* =========================================
+   SEAT MODAL & CINEMA GRID SYSTEM
+   ========================================= */
+
+.seat-modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.seat-modal--active {
+    display: flex;
+}
+
+.seat-modal__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+}
+
+.seat-modal__content {
+    position: relative;
+    width: min(1080px, calc(100% - 40px));
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 36px;
+    background: #080c09;
+    border: 1px solid #29322c;
+    border-radius: 18px;
+    color: #fff;
+    z-index: 1;
+}
+
+.seat-modal__close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 38px;
+    height: 38px;
+    background: #111612;
+    border: 1px solid #303833;
+    border-radius: 8px;
+    color: white;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.seat-modal__header span {
+    color: var(--cineflex-green);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.seat-modal__header h2 {
+    margin: 8px 0 5px;
+    font-size: 30px;
+}
+
+.seat-modal__header p {
+    margin: 0;
+    color: #858d87;
+    font-size: 13px;
+}
+
+.cinema-screen {
+    width: 92%;
+    max-width: 760px;
+    margin: 35px auto 45px;
+    padding-top: 12px;
+    border-top: 3px solid var(--cineflex-green);
+    color: #69716b;
+    font-size: 10px;
+    text-align: center;
+    letter-spacing: 5px;
+    box-shadow: 0 -8px 25px rgba(57, 244, 119, 0.12);
+}
+
+.seat-modal__seats {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: auto;
+    padding: 10px 0;
+}
+
+.auditory-seats {
+    display: none;
+}
+
+.seat-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.seat-row__name {
+    width: 28px;
+    color: #717972;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+/* Base Seat Design */
+.seat {
+    position: relative;
+    width: 38px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #111612;
+    border: 1px solid #323b34;
+    border-radius: 8px 8px 5px 5px;
+    color: #d5dbd6;
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow:
+        inset 0 -4px 0 rgba(255, 255, 255, 0.02),
+        0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.seat::after {
+    content: "";
+    position: absolute;
+    left: 4px;
+    right: 4px;
+    bottom: -7px;
+    height: 9px;
+    background: #0c100d;
+    border: 1px solid #323b34;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+}
+
+.seat::before {
+    content: "";
+    position: absolute;
+    left: -4px;
+    right: -4px;
+    bottom: 3px;
+    height: 12px;
+    border-left: 4px solid #222923;
+    border-right: 4px solid #222923;
+    border-radius: 4px;
+    pointer-events: none;
+}
+
+/* Double Seat (Spans 2 standard seat positions) */
+.seat--double {
+    width: 84px;
+    background: #14111d;
+    border-color: var(--cineflex-purple);
+    color: #e0d0ff;
+}
+
+.seat--double::after {
+    background: #0e0b16;
+    border-color: var(--cineflex-purple);
+}
+
+.seat--double::before {
+    border-left-color: #382459;
+    border-right-color: #382459;
+}
+
+/* Aisle Separation Gap */
+.seat--aisle-after {
+    margin-right: 28px;
+}
+
+/* Hover States */
+.seat:hover:not(.seat--occupied) {
+    border-color: var(--cineflex-green);
+    transform: translateY(-3px);
+    box-shadow: 0 0 14px rgba(57, 244, 119, 0.2);
+}
+
+.seat--double:hover:not(.seat--occupied) {
+    border-color: var(--cineflex-green);
+    box-shadow: 0 0 16px rgba(155, 92, 255, 0.35);
+}
+
+/* Selected State */
+.seat--selected {
+    background: var(--cineflex-green) !important;
+    border-color: var(--cineflex-green) !important;
+    color: #041008 !important;
+    box-shadow: 0 0 18px rgba(57, 244, 119, 0.35) !important;
+}
+
+.seat--selected::after {
+    background: #2dd969;
+    border-color: var(--cineflex-green);
+}
+
+.seat--selected::before {
+    border-left-color: var(--cineflex-green);
+    border-right-color: var(--cineflex-green);
+}
+
+/* Occupied State */
+.seat--occupied {
+    background: #292d2a !important;
+    border-color: #323633 !important;
+    color: #555b57 !important;
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.seat--occupied::after {
+    background: #202421;
+    border-color: #323633;
+}
+
+.seat--occupied::before {
+    border-left-color: #303431;
+    border-right-color: #303431;
+}
+
+.seat--occupied:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+/* Legend */
+.seat-legend {
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+    margin-top: 35px;
+    padding-top: 20px;
+    border-top: 1px solid #222923;
+    color: #808881;
+    font-size: 11px;
+    flex-wrap: wrap;
+}
+
+.seat-legend div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.seat-example {
+    width: 18px;
+    height: 16px;
+    background: #111612;
+    border: 1px solid #323b34;
+    border-radius: 4px;
+}
+
+.seat-example--double {
+    width: 32px;
+    background: #14111d;
+    border-color: var(--cineflex-purple);
+}
+
+.seat-example--selected {
+    background: var(--cineflex-green);
+    border-color: var(--cineflex-green);
+}
+
+.seat-example--occupied {
+    background: #292d2a;
+    opacity: 0.5;
+}
+
+/* Footer */
+.seat-modal__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 30px;
+    padding-top: 22px;
+    border-top: 1px solid #222923;
+}
+
+#selected-seat-count {
+    color: #89918b;
+    font-size: 13px;
+}
+
+.seat-reserve-button {
+    padding: 13px 26px;
+    background: var(--cineflex-green);
+    border: 0;
+    border-radius: 8px;
+    color: #041008;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.seat-reserve-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(57, 244, 119, 0.3);
+}
+
+/* ========================================
+   RESERVATION CONFIRMATION MODAL
+   ======================================== */
+
+.reservation-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.reservation-modal--active {
+    display: flex;
+}
+
+.reservation-modal__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(8px);
+}
+
+.reservation-modal__content {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 500px);
+    max-height: calc(100vh - 40px); /* Fixed typo here */
+    padding: 32px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    background: var(--cineflex-surface-light, #14171a);
+    border: 1px solid var(--cineflex-border, #25282d);
+    border-radius: var(--cineflex-radius, 14px);
+    color: var(--cineflex-text, #ffffff);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+}
+
+.reservation-modal__close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: var(--cineflex-text-muted, #888d94);
+    font-family: inherit;
+    font-size: 1.8rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.reservation-modal__close:hover {
+    color: var(--cineflex-text, #ffffff);
+}
+
+.reservation-modal__header {
+    margin-bottom: 28px;
+}
+
+.reservation-modal__header > span {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--cineflex-green, #39ff88);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+}
+
+.reservation-modal__header h2 {
+    margin: 0 0 8px;
+    color: var(--cineflex-text, #ffffff);
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.reservation-modal__header p {
+    margin: 0;
+    color: var(--cineflex-text-muted, #888d94);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.reservation-modal__details {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 28px;
+}
+
+.reservation-modal__detail {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--cineflex-border, #25282d);
+}
+
+.reservation-modal__detail:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.reservation-modal__detail > span {
+    color: var(--cineflex-text-muted, #888d94);
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.reservation-modal__detail strong {
+    color: var(--cineflex-text, #ffffff);
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.reservation-modal__seats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.reservation-seat {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 42px;
+    height: 38px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    background: rgba(57, 255, 136, 0.08);
+    border: 1px solid rgba(57, 255, 136, 0.35);
+    border-radius: 8px;
+    color: var(--cineflex-green, #39ff88);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.reservation-modal__actions {
+    display: flex;
+    gap: 12px;
+}
+
+.reservation-modal__cancel,
+.reservation-modal__confirm {
+    flex: 1;
+    min-height: 46px;
+    padding: 12px 18px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.reservation-modal__cancel {
+    background: transparent;
+    border: 1px solid var(--cineflex-border, #25282d);
+    color: var(--cineflex-text-muted, #888d94);
+}
+
+.reservation-modal__cancel:hover {
+    border-color: var(--cineflex-text, #ffffff);
+    color: var(--cineflex-text, #ffffff);
+}
+
+.reservation-modal__confirm {
+    background: var(--cineflex-green, #39ff88);
+    border: 1px solid var(--cineflex-green, #39ff88);
+    color: var(--cineflex-bg, #050607);
+}
+
+.reservation-modal__confirm:hover {
+    background: #18b95b;
+    border-color: #18b95b;
+    transform: translateY(-1px);
+}
+
+/* ========================================
+   MOBILE RESPONSIVENESS (MODALS)
+   ======================================== */
+
+@media (max-width: 600px) {
+    .reservation-modal {
+        padding: 14px;
+    }
+
+    .reservation-modal__content {
+        width: 100%;
+        padding: 24px;
+        border-radius: 12px;
+    }
+
+    .reservation-modal__header h2 {
+        font-size: 1.4rem;
+    }
+
+    .reservation-modal__actions {
+        flex-direction: column;
+    }
+
+    .reservation-modal__cancel,
+    .reservation-modal__confirm {
+        width: 100%;
+    }
 }
