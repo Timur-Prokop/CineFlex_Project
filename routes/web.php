@@ -207,6 +207,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/make-reservations', [ReservationController::class, 'store'])
         ->name('reservations.store');
 
-    Route::delete('/reservations/{reservation}', [ReservationController::class, 'destroy'])
+    Route::delete('/reservations', [ReservationController::class, 'destroy'])
         ->name('reservations.destroy');
 });

@@ -43,9 +43,15 @@ class ReservationController extends Controller
                 return $reservation->screening->date_time->getTimestamp();
             });
 
+        // Fetch all seats and all system reservations to build the modal grids
+        $seats = \App\Models\Seat::all();
+        $allReservations = Reservation::all();
+
         return view('reservations.reservations', [
             'upcomingReservationsByScreening' => $upcomingReservations->groupBy('fk_screening'),
-            'pastReservationsByScreening' => $pastReservations->groupBy('fk_screening'),
+            'pastReservationsByScreening'     => $pastReservations->groupBy('fk_screening'),
+            'seats'                           => $seats,             // Added for modal
+            'allReservations'                 => $allReservations,   // Added for modal
         ]);
     }
 
@@ -156,25 +162,46 @@ class ReservationController extends Controller
             ->with('success', 'Je reservering is succesvol geplaatst.');
     }
 
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $reservation = Reservation::where('fk_user', Auth::id())
-            ->findOrFail($id);
+        // 1. Validate the incoming data from the modal
+        $request->validate([
+            'screening_id' => 'required|integer|exists:screenings,id',
+            'seat_ids'     => 'required|array',
+            'seat_ids.*'   => 'integer|exists:seats,id',
+        ]);
 
-        $deadline = $reservation->screening->date_time
-            ->copy()
-            ->subHours(24);
+        $screeningId = $request->input('screening_id');
+        $seatIds = $request->input('seat_ids');
+        $userId = Auth::id();
 
-        if (now()->greaterThanOrEqualTo($deadline)) {
-            throw ValidationException::withMessages([
-                'reservation' => 'Annuleren kan alleen tot 24 uur voor de voorstelling.',
+        // 2. Fetch the screening to enforce the 24-hour rule on the backend
+        $screening = Screening::findOrFail($screeningId);
+
+        if (\Carbon\Carbon::parse($screening->date_time)->isBefore(now()->addDay())) {
+            return back()->withErrors([
+                'error' => 'Je kunt een reservering alleen tot 24 uur voor de voorstelling annuleren.'
             ]);
         }
 
-        $reservation->delete();
+        // 3. Find and delete the specific reservations.
+        // We strictly check fk_user to prevent users from deleting other people's seats!
+        $deletedCount = Reservation::where('fk_user', $userId)
+            ->where('fk_screening', $screeningId)
+            ->whereIn('fk_seat', $seatIds)
+            ->delete();
 
-        return redirect()
-            ->route('reservations.index')
-            ->with('success', 'Je reservering is succesvol geanuleerd.');
+        // 4. Return to the page with a success or error message
+        if ($deletedCount > 0) {
+            $message = $deletedCount === 1
+                ? '1 plaats is succesvol geannuleerd.'
+                : $deletedCount . ' plaatsen zijn succesvol geannuleerd.';
+
+            return back()->with('success', $message);
+        }
+
+        return back()->withErrors([
+            'error' => 'Er is iets misgegaan. Controleer of je de juiste plaatsen hebt geselecteerd.'
+        ]);
     }
 }

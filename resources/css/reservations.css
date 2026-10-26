@@ -633,3 +633,554 @@
         padding: 12px 18px;
     }
 }
+
+/* =========================================
+   CANCELLATION SEAT MODAL & CINEMA SYSTEM
+   ========================================= */
+
+.seat-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.seat-modal--active {
+    display: flex;
+}
+
+.seat-modal__overlay {
+    position: absolute;
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+}
+
+.seat-modal__content {
+    position: relative;
+    z-index: 1;
+
+    width: min(1080px, calc(100% - 40px));
+    max-height: 90vh;
+    padding: 36px;
+
+    overflow-y: auto;
+    box-sizing: border-box;
+
+    background: #080c09;
+    border: 1px solid #29322c;
+    border-radius: 18px;
+
+    color: var(--cineflex-text);
+}
+
+.seat-modal__close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+
+    width: 38px;
+    height: 38px;
+
+    background: #111612;
+    border: 1px solid #303833;
+    border-radius: 8px;
+
+    color: #ffffff;
+    font-size: 22px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.seat-modal__close:hover {
+    background: #19201a;
+    border-color: #434e47;
+}
+
+.seat-modal__header span {
+    display: block;
+
+    margin-bottom: 6px;
+
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.seat-modal__header h2 {
+    margin: 0 0 5px;
+
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.seat-modal__header p {
+    margin: 0;
+
+    color: var(--cineflex-text-muted);
+
+    font-size: 13px;
+}
+
+.cinema-screen {
+    width: 92%;
+    max-width: 760px;
+
+    margin: 35px auto 45px;
+    padding-top: 12px;
+
+    border-top: 3px solid var(--cineflex-green);
+
+    color: #69716b;
+    font-size: 10px;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 5px;
+
+    box-shadow: 0 -8px 25px rgba(57, 244, 119, 0.12);
+}
+
+.seat-modal__seats {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 10px 0;
+    overflow-x: auto;
+}
+
+.auditory-seats {
+    display: none;
+}
+
+.seat-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    margin-bottom: 12px;
+}
+
+.seat-row__name {
+    width: 28px;
+
+    color: #717972;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+/* Base Seat Design */
+.seat {
+    position: relative;
+
+    width: 38px;
+    height: 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #111612;
+    border: 1px solid #323b34;
+    border-radius: 8px 8px 5px 5px;
+
+    color: #d5dbd6;
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+    box-shadow:
+        inset 0 -4px 0 rgba(255, 255, 255, 0.02),
+        0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.seat::after {
+    content: "";
+
+    position: absolute;
+    left: 4px;
+    right: 4px;
+    bottom: -7px;
+
+    height: 9px;
+
+    background: #0c100d;
+    border: 1px solid #323b34;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+}
+
+.seat::before {
+    content: "";
+
+    position: absolute;
+    left: -4px;
+    right: -4px;
+    bottom: 3px;
+
+    height: 12px;
+
+    border-left: 4px solid #222923;
+    border-right: 4px solid #222923;
+    border-radius: 4px;
+
+    pointer-events: none;
+}
+
+/* Double Seat */
+.seat--double {
+    width: 84px;
+}
+
+/* Aisle Separation Gap */
+.seat--aisle-after {
+    margin-right: 28px;
+}
+
+/* User Owned Seats (Active target for cancellation) */
+.seat--user-reserved {
+    background: var(--cineflex-green) !important;
+    border-color: var(--cineflex-green) !important;
+
+    color: #041008 !important;
+}
+
+.seat--user-reserved::after {
+    background: #2dd969;
+    border-color: var(--cineflex-green);
+}
+
+.seat--user-reserved::before {
+    border-left-color: var(--cineflex-green);
+    border-right-color: var(--cineflex-green);
+}
+
+/* Hover State for cancellation selection */
+.seat--user-reserved:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 16px rgba(57, 244, 119, 0.4);
+}
+
+/* When a user clicks their own seat to cancel it */
+.seat--user-reserved.seat--selected {
+    background: rgba(255, 75, 85, 0.3) !important;
+    border-color: #ff6972 !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 16px rgba(255, 105, 114, 0.4) !important;
+}
+
+.seat--user-reserved.seat--selected::after {
+    background: rgba(255, 75, 85, 0.2);
+    border-color: #ff6972;
+}
+
+.seat--user-reserved.seat--selected::before {
+    border-left-color: #ff6972;
+    border-right-color: #ff6972;
+}
+
+/* Occupied / Non-User Seats */
+.seat--occupied {
+    background: #1a1e1b !important;
+    border-color: #242925 !important;
+
+    color: #474d48 !important;
+
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.seat--occupied::after {
+    background: #141815;
+    border-color: #242925;
+}
+
+.seat--occupied::before {
+    border-left-color: #202521;
+    border-right-color: #202521;
+}
+
+.seat--occupied:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+/* Legend */
+.seat-legend {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    gap: 28px;
+
+    margin-top: 35px;
+    padding-top: 20px;
+
+    border-top: 1px solid #222923;
+
+    color: #808881;
+    font-size: 11px;
+}
+
+.seat-legend div {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+}
+
+.seat-example {
+    width: 18px;
+    height: 16px;
+
+    background: #111612;
+    border: 1px solid #323b34;
+    border-radius: 4px;
+}
+
+.seat-example--double {
+    width: 32px;
+}
+
+.seat-example--occupied {
+    background: #1a1e1b;
+    border-color: #242925;
+    opacity: 0.5;
+}
+
+/* Footer */
+.seat-modal__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-top: 30px;
+    padding-top: 22px;
+
+    border-top: 1px solid #222923;
+}
+
+#cancel-selected-seat-count {
+    color: var(--cineflex-text-muted);
+    font-size: 13px;
+}
+
+
+/* =========================================
+   CANCELLATION CONFIRMATION MODAL
+   ========================================= */
+
+.reservation-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.reservation-modal--active {
+    display: flex;
+}
+
+.reservation-modal__overlay {
+    position: absolute;
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+}
+
+.reservation-modal__content {
+    position: relative;
+    z-index: 1;
+
+    width: min(100%, 500px);
+    max-height: calc(100vh - 40px);
+
+    padding: 32px;
+    overflow-y: auto;
+    box-sizing: border-box;
+
+    background: var(--cineflex-surface-light);
+    border: 1px solid var(--cineflex-border);
+    border-radius: var(--cineflex-radius);
+
+    color: var(--cineflex-text);
+
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+}
+
+.reservation-modal__close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+
+    width: 36px;
+    height: 36px;
+
+    padding: 0;
+    border: none;
+
+    background: transparent;
+
+    color: var(--cineflex-text-muted);
+    font-size: 1.8rem;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition: color 0.2s ease;
+}
+
+.reservation-modal__close:hover {
+    color: var(--cineflex-text);
+}
+
+.reservation-modal__header {
+    margin-bottom: 24px;
+}
+
+.reservation-modal__header h2 {
+    margin: 0 0 8px;
+
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.reservation-modal__header p {
+    margin: 0;
+
+    color: var(--cineflex-text-muted);
+
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.reservation-modal__details {
+    display: flex;
+    flex-direction: column;
+
+    gap: 18px;
+
+    margin-bottom: 26px;
+}
+
+.reservation-modal__detail {
+    display: flex;
+    flex-direction: column;
+
+    gap: 6px;
+    padding-bottom: 16px;
+
+    border-bottom: 1px solid var(--cineflex-border);
+}
+
+.reservation-modal__detail:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.reservation-modal__detail > span {
+    color: var(--cineflex-text-muted);
+
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.reservation-modal__detail strong {
+    color: var(--cineflex-text);
+
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.reservation-modal__seats {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 8px;
+}
+
+.reservation-modal__actions {
+    display: flex;
+
+    gap: 12px;
+
+    margin-top: 10px;
+}
+
+.reservation-modal__cancel {
+    flex: 1;
+
+    min-height: 46px;
+    padding: 12px 18px;
+
+    box-sizing: border-box;
+
+    background: transparent;
+    border: 1px solid var(--cineflex-border);
+    border-radius: 10px;
+
+    color: var(--cineflex-text-muted);
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.reservation-modal__cancel:hover {
+    border-color: var(--cineflex-text);
+
+    color: var(--cineflex-text);
+}
+
+
+/* =========================================
+   MOBILE RESPONSIVENESS
+   ========================================= */
+
+@media (max-width: 600px) {
+    .seat-modal__content {
+        padding: 24px 18px;
+    }
+
+    .seat-modal__footer {
+        flex-direction: column;
+        align-items: stretch;
+
+        gap: 16px;
+    }
+
+    .reservation-modal__content {
+        padding: 24px;
+    }
+
+    .reservation-modal__actions {
+        flex-direction: column-reverse;
+    }
+
+    .reservation-modal__cancel {
+        width: 100%;
+    }
+}
